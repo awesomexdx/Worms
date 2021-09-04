@@ -11,7 +11,7 @@ namespace Snakes.behaviours
     {
         public SnakeAction NextStep()
         {
-            return new SnakeAction(allMoves[(new Random().Next(0, allMoves.Count))], (ActionType) (new Random().Next(0, 2)));
+            return new SnakeAction(allMoves[(new Random().Next(0, allMoves.Count))], (ActionType) (new Random().Next(0, 3)));
         }
     }
 }
