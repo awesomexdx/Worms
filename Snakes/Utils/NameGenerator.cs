@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snakes.models;
 
-namespace Snakes.moves
+namespace Snakes.Utils
 {
-    public interface IMove
+    static class NameGenerator
     {
-        Cell Move(Cell cell);
+
     }
 }

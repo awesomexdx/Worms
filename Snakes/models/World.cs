@@ -11,14 +11,14 @@ namespace Snakes.models
     class World
     {
         List<Snake> snakesList = new List<Snake>();
-        List<Cell> foodList = new List<Cell>();
+        List<Food> foodList = new List<Food>();
 
         private Simulator simulator;
 
         private static World instance;
         private World()
         {
-            simulator = new Simulator(snakesList);
+            simulator = new Simulator(snakesList, foodList);
         }
 
         public void AddSnake(Snake snake)
@@ -42,7 +42,14 @@ namespace Snakes.models
             
             foreach (var snake in Instance().snakesList)
             {
-                state += snake.Name + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
+                state += snake.Name + "-" + snake.HitPoints + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
+            }
+
+            state += "], Food:[";
+
+            foreach (var food in Instance().foodList)
+            {
+                state += "(" + food.Cell.X + "," + food.Cell.Y + ")";
             }
 
             state += "]";

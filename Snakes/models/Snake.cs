@@ -37,9 +37,11 @@ namespace Snakes.models
             }
         }
 
-        public void Answer()
+        public SnakeAction Answer()
         {
-            this.Behaviour.NextStep().Move.Move(this.Cell);
+            SnakeAction action = this.Behaviour.NextStep();
+            //action.Move.Move(this.Cell);
+            return action;
         }
     }
 }

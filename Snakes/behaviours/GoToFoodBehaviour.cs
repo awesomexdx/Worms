@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snakes.moves
+namespace Snakes.behaviours
 {
-    class MoveLeft : IMove
+    class GoToFoodBehaviour : Behaviour, IBehaviour
     {
-        public Cell Move(Cell cell)
+        public SnakeAction NextStep()
         {
-            cell.X--;
-            return cell;
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,9 +9,10 @@ namespace Snakes.moves
 {
     class MoveUp : IMove
     {
-        public void Move(Cell cell)
+        public Cell Move(Cell cell)
         {
             cell.Y++;
+            return cell;
         }
     }
 }
