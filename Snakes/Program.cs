@@ -1,6 +1,7 @@
 ﻿using System;
 using Snakes.behaviours;
 using Snakes.models;
+using Snakes.Utils;
 
 namespace Snakes
 {
@@ -9,7 +10,7 @@ namespace Snakes
         static void Main(string[] args)
         {
             Console.WriteLine("Starting life...");
-            World.Instance().AddSnake(new Snake("Jonh", new Cell(0,0,CellContent.Snake), new RandomBehaviour()));
+            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0,0,CellContent.Snake), new GoToFoodBehaviour(new Cell(0,0,CellContent.Snake))));
             World.Start();
         }
     }

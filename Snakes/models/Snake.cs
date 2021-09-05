@@ -8,17 +8,17 @@ using Snakes.moves;
 
 namespace Snakes.models
 {
-    class Snake
+    public class Snake
     {
         public string Name { get; set; }
         public Cell Cell { get; set; }
-        public IBehaviour Behaviour { get; set; }
+        public Behaviour Behaviour { get; set; }
         public int HitPoints { get; set; }
         public Snake(string name, int x, int y, IBehaviour behaviour)
         {
             this.Name = name;
             this.Cell = new Cell(x, y, CellContent.Snake);
-            this.Behaviour = behaviour;
+            this.Behaviour = (Behaviour) behaviour;
             this.HitPoints = 10;
         }
 
@@ -28,7 +28,7 @@ namespace Snakes.models
             {
                 this.Name = name;
                 this.Cell = cell;
-                this.Behaviour = behaviour;
+                this.Behaviour = (Behaviour)behaviour;
                 this.HitPoints = 10;
             }
             else
@@ -39,6 +39,7 @@ namespace Snakes.models
 
         public SnakeAction Answer()
         {
+            this.Behaviour.CurrentCell = this.Cell;
             SnakeAction action = this.Behaviour.NextStep();
             //action.Move.Move(this.Cell);
             return action;

@@ -8,7 +8,7 @@ namespace Snakes.Utils
 {
     static class RandomGenerator
     {
-        public static int NextNormal(this Random r, double mu = 0, double sigma = 1)
+        public static int NextNormal(this Random r, double mu = 0, double sigma = 5)
         {
             var u1 = r.NextDouble();
 
