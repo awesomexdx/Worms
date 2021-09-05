@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Snakes.behaviours;
 using Snakes.models;
@@ -9,14 +10,14 @@ using Snakes.Utils;
 
 namespace Snakes
 {
-    class Simulator
+    public class Simulator
     {
         private const int GAME_DURATION = 100;
         private const int SNAKE_REWARD = 10;
         private const int REPRODUCTION_PRICE = 10;
         private List<Snake> snakes;
         private List<Food> foods;
-        private int currentStep;
+        public int currentStep;
 
         private List<Snake> newSnakes = new List<Snake>();
 
@@ -48,7 +49,7 @@ namespace Snakes
                     if (snake.Cell.X == x && snake.Cell.Y == y)
                     {
                         snake.HitPoints += SNAKE_REWARD;
-                        break;
+                        return;
                     }
                 }
 
@@ -107,7 +108,7 @@ namespace Snakes
             if (cellContent == CellContent.Void && snake.HitPoints >= 11)
             {
                 snake.HitPoints -= REPRODUCTION_PRICE;
-                newSnakes.Add(new Snake(snake.Name + snakes.Count, newCell.X, newCell.Y, new RandomBehaviour()));
+                newSnakes.Add(new Snake(NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour(newCell)));
             }
         }
         private void resolveAction(SnakeAction action, Snake snake)
@@ -129,12 +130,21 @@ namespace Snakes
             }
         }
 
-        public void start()
+        public GameSession start()
         {
+            FileHandler.CreateNewGameSessionFile();
+            GameSession gameSession = new GameSession();
+
             for (; currentStep < GAME_DURATION; currentStep++)
             {
+                gameSession.SetSnakeList(snakes, currentStep);
+                gameSession.SetFoodList(foods, currentStep);
+
                 Console.WriteLine(World.GetCurrentState());
+                FileHandler.WriteToFile(World.GetCurrentState() + "\r\n");
                 
+                generateFood();
+
                 foreach (var snake in snakes)
                 {
                     SnakeAction action = snake.Answer();
@@ -143,7 +153,6 @@ namespace Snakes
                     if (snake.HitPoints <= 0) { deadSnakes.Add(snake); }
                 }
 
-                generateFood();
 
                 foreach (var food in foods)
                 {
@@ -176,6 +185,8 @@ namespace Snakes
                 deadSnakes.Clear();
 
             }
+
+            return gameSession;
         }
     }
 }

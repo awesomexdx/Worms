@@ -8,7 +8,7 @@ using Snakes.moves;
 
 namespace Snakes.behaviours
 {
-    abstract class Behaviour
+    public abstract class Behaviour : IBehaviour
     {
         protected List<IMove> allMoves = new List<IMove>(){new MoveDown(), new MoveUp(), new MoveLeft(), new MoveRight()};
         public Cell CurrentCell { get; set; }
@@ -18,5 +18,7 @@ namespace Snakes.behaviours
         {
             return new SnakeAction(prevMove, ActionType.MOVE);
         }
+
+        public abstract SnakeAction NextStep();
     }
 }

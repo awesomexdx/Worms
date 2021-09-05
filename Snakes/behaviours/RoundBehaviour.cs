@@ -8,13 +8,13 @@ using Snakes.moves;
 
 namespace Snakes.behaviours
 {
-    class RoundBehaviour : Behaviour, IBehaviour
+    class RoundBehaviour : Behaviour
     {
         public RoundBehaviour()
         {
             this.PrevAction = new SnakeAction(allMoves[0], ActionType.NOTHING);
         }
-        public SnakeAction NextStep()
+        public override SnakeAction NextStep()
         {
             switch (PrevAction.ActionType)
             {

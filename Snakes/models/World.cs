@@ -8,12 +8,22 @@ using Snakes.behaviours;
 
 namespace Snakes.models
 {
-    class World
+    public class World
     {
         List<Snake> snakesList = new List<Snake>();
         List<Food> foodList = new List<Food>();
 
-        private Simulator simulator;
+        public List<Snake> Snakes
+        {
+            get { return snakesList; }
+        }
+
+        public List<Food> Foods
+        {
+            get { return foodList; }
+        }
+
+        public Simulator simulator;
 
         private static World instance;
         private World()
@@ -26,9 +36,14 @@ namespace Snakes.models
             simulator.addSnake(snake);
         }
 
-        public static void Start()
+        public static GameSession Start()
         {
-            Instance().simulator.start();
+           return Instance().simulator.start();
+        }
+
+        public static void Reset()
+        {
+            instance = null;
         }
 
         public static World Instance()

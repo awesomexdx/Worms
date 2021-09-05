@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snakes.models
 {
-    class Food
+    public class Food
     {
         public Cell Cell { get; set; }
         public int TimeToLive { get; set; }
