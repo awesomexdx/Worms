@@ -36,6 +36,8 @@ namespace View
             this.prev = new System.Windows.Forms.Button();
             this.continueButton = new System.Windows.Forms.Button();
             this.timeoutUpDown = new System.Windows.Forms.NumericUpDown();
+            this.toFirstStepButton = new System.Windows.Forms.Button();
+            this.toLastStepButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.worldField)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeoutUpDown)).BeginInit();
             this.SuspendLayout();
@@ -58,9 +60,9 @@ namespace View
             // 
             this.startButton.Location = new System.Drawing.Point(12, 12);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(156, 42);
+            this.startButton.Size = new System.Drawing.Size(156, 40);
             this.startButton.TabIndex = 1;
-            this.startButton.Text = "Start";
+            this.startButton.Text = "Start new simulation";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
@@ -87,7 +89,7 @@ namespace View
             // 
             this.prev.Location = new System.Drawing.Point(274, 13);
             this.prev.Name = "prev";
-            this.prev.Size = new System.Drawing.Size(112, 40);
+            this.prev.Size = new System.Drawing.Size(112, 39);
             this.prev.TabIndex = 4;
             this.prev.Text = "Previous step";
             this.prev.UseVisualStyleBackColor = true;
@@ -98,7 +100,7 @@ namespace View
             this.continueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.continueButton.Location = new System.Drawing.Point(647, 15);
             this.continueButton.Name = "continueButton";
-            this.continueButton.Size = new System.Drawing.Size(173, 39);
+            this.continueButton.Size = new System.Drawing.Size(173, 37);
             this.continueButton.TabIndex = 5;
             this.continueButton.Text = "Continue with timeout";
             this.continueButton.UseVisualStyleBackColor = true;
@@ -122,11 +124,35 @@ namespace View
             0,
             0});
             // 
+            // toFirstStepButton
+            // 
+            this.toFirstStepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.toFirstStepButton.Location = new System.Drawing.Point(547, 15);
+            this.toFirstStepButton.Name = "toFirstStepButton";
+            this.toFirstStepButton.Size = new System.Drawing.Size(94, 37);
+            this.toFirstStepButton.TabIndex = 7;
+            this.toFirstStepButton.Text = "First step";
+            this.toFirstStepButton.UseVisualStyleBackColor = true;
+            this.toFirstStepButton.Click += new System.EventHandler(this.toFirstStepButton_Click);
+            // 
+            // toLastStepButton
+            // 
+            this.toLastStepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.toLastStepButton.Location = new System.Drawing.Point(447, 15);
+            this.toLastStepButton.Name = "toLastStepButton";
+            this.toLastStepButton.Size = new System.Drawing.Size(94, 37);
+            this.toLastStepButton.TabIndex = 8;
+            this.toLastStepButton.Text = "Last step";
+            this.toLastStepButton.UseVisualStyleBackColor = true;
+            this.toLastStepButton.Click += new System.EventHandler(this.toLastStepButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 491);
+            this.Controls.Add(this.toLastStepButton);
+            this.Controls.Add(this.toFirstStepButton);
             this.Controls.Add(this.timeoutUpDown);
             this.Controls.Add(this.continueButton);
             this.Controls.Add(this.prev);
@@ -154,6 +180,8 @@ namespace View
         private System.Windows.Forms.Button prev;
         private System.Windows.Forms.Button continueButton;
         private System.Windows.Forms.NumericUpDown timeoutUpDown;
+        private System.Windows.Forms.Button toFirstStepButton;
+        private System.Windows.Forms.Button toLastStepButton;
     }
 }
 

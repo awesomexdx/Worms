@@ -92,8 +92,7 @@ namespace View
                 fieldPrepared = true;
             }
             World.Reset();
-            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))));
-            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(3, 3, CellContent.Snake), new GoToFoodBehaviour(new Cell(3, 3, CellContent.Snake))));
+            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0,0,CellContent.Snake))));
             gameSession = World.Start();
             goToStep(0);
         }
@@ -104,7 +103,7 @@ namespace View
 
         private void next_Click(object sender, EventArgs e)
         {
-            if (currentStep < 99)
+            if (currentStep < 99 && fieldPrepared)
             {
                 goToStep(currentStep + 1);
             }
@@ -112,7 +111,7 @@ namespace View
 
         private void prev_Click(object sender, EventArgs e)
         {
-            if (currentStep > 0)
+            if (currentStep > 0 && fieldPrepared)
             {
                 goToStep(currentStep - 1);
 
@@ -121,27 +120,42 @@ namespace View
 
         private void continueButton_Click(object sender, EventArgs e)
         {
-            started = !started;
-
-            if (started)
+            if (fieldPrepared)
             {
-                continueButton.Text = "Stop";
-            }
-            else
-            {
-                continueButton.Text = "Continue with timeout";
-            }
+                started = !started;
 
-            continueGame();
+                if (started)
+                {
+                    continueButton.Text = "Stop";
+                }
+                else
+                {
+                    continueButton.Text = "Continue with timeout";
+                }
+
+                continueGame();
+            }
         }
 
         private async void continueGame()
         {
-            while (started && currentStep < 99)
+            while (started && currentStep < 99 && fieldPrepared)
             {
                 await Task.Delay((int)this.timeoutUpDown.Value);
                 goToStep(currentStep + 1);
             }
+        }
+
+        private void toFirstStepButton_Click(object sender, EventArgs e)
+        {
+            if (fieldPrepared)
+                goToStep(0);
+        }
+
+        private void toLastStepButton_Click(object sender, EventArgs e)
+        {
+            if (fieldPrepared)
+                goToStep(99);
         }
     }
 }

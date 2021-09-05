@@ -40,6 +40,7 @@ namespace Snakes.models
         public SnakeAction Answer()
         {
             this.Behaviour.CurrentCell = this.Cell;
+            this.Behaviour.SnakeHP = this.HitPoints;
             SnakeAction action = this.Behaviour.NextStep();
             //action.Move.Move(this.Cell);
             return action;

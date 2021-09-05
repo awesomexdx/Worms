@@ -8,7 +8,7 @@ using Snakes.moves;
 
 namespace Snakes.behaviours
 {
-    class RoundBehaviour : Behaviour
+    public class RoundBehaviour : Behaviour
     {
         public RoundBehaviour()
         {
