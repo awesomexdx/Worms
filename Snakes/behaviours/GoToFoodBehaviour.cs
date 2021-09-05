@@ -33,6 +33,11 @@ namespace Snakes.behaviours
 
             SnakeAction action = GetNextMove(CurrentCell, foods.ElementAt(minDistanceIndex).Cell);
 
+            if (this.SnakeHP > 30)
+            {
+                action.ActionType = ActionType.REPRODUCE;
+            }
+
             return action;
         }
 
