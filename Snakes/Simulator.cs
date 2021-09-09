@@ -67,6 +67,14 @@ namespace Snakes
                 } 
             }
 
+            foreach (var snake in newSnakes)
+            {
+                if (snake.Cell.X == cell.X && snake.Cell.Y == cell.Y)
+                {
+                    return CellContent.Snake;
+                }
+            }
+
             foreach (var food in World.Instance().Foods)
             {
                 if (food.Cell.X == cell.X && food.Cell.Y == cell.Y)
