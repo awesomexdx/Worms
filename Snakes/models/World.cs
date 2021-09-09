@@ -28,12 +28,12 @@ namespace Snakes.models
         private static World instance;
         private World()
         {
-            simulator = new Simulator(snakesList, foodList);
+            simulator = new Simulator();
         }
 
         public void AddSnake(Snake snake)
         {
-            simulator.addSnake(snake);
+            snakesList.Add(snake);
         }
 
         public static GameSession Start()

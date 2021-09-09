@@ -15,8 +15,6 @@ namespace Snakes
         private const int GAME_DURATION = 100;
         private const int SNAKE_REWARD = 10;
         private const int REPRODUCTION_PRICE = 10;
-        private List<Snake> snakes;
-        private List<Food> foods;
         public int currentStep;
 
         private List<Snake> newSnakes = new List<Snake>();
@@ -24,15 +22,9 @@ namespace Snakes
         private List<Snake> deadSnakes = new List<Snake>();
         private List<Food> deadFoods = new List<Food>();
         private int ateFood;
-        public Simulator(List<Snake> snakes, List<Food> foods)
+        public Simulator()
         {
             currentStep = 0;
-            this.snakes = snakes;
-            this.foods = foods;
-        }
-        public void addSnake(Snake snake)
-        {
-            this.snakes.Add(snake);
         }
         public void generateFood()
         {
@@ -44,7 +36,7 @@ namespace Snakes
                 int x = RandomGenerator.NextNormal(new Random());
                 int y = RandomGenerator.NextNormal(new Random());
 
-                foreach (var snake in snakes)
+                foreach (var snake in World.Instance().Snakes)
                 {
                     if (snake.Cell.X == x && snake.Cell.Y == y)
                     {
@@ -53,7 +45,7 @@ namespace Snakes
                     }
                 }
 
-                foreach (var food in foods)
+                foreach (var food in World.Instance().Foods)
                 {
                     if (food.Cell.X == x && food.Cell.Y == y)
                     {
@@ -61,13 +53,13 @@ namespace Snakes
                     }
                 }
 
-                foods.Add(new Food(new Cell(x,y,CellContent.Food)));
+                World.Instance().Foods.Add(new Food(new Cell(x,y,CellContent.Food)));
                 break;
             }
         }
         private CellContent isCellOccupied(Cell cell)
         {
-            foreach (var snake in snakes)
+            foreach (var snake in World.Instance().Snakes)
             {
                 if (snake.Cell.X == cell.X && snake.Cell.Y == cell.Y)
                 {
@@ -75,11 +67,11 @@ namespace Snakes
                 } 
             }
 
-            foreach (var food in foods)
+            foreach (var food in World.Instance().Foods)
             {
                 if (food.Cell.X == cell.X && food.Cell.Y == cell.Y)
                 {
-                    ateFood = foods.IndexOf(food);
+                    ateFood = World.Instance().Foods.IndexOf(food);
                     return CellContent.Food;
                 }
             }
@@ -93,7 +85,7 @@ namespace Snakes
             if (cellContent == CellContent.Food)
             {
                 snake.HitPoints += SNAKE_REWARD;
-                foods.RemoveAt(ateFood);
+                World.Instance().Foods.RemoveAt(ateFood);
                 snake.Cell = newCell;
             }
             else if (cellContent == CellContent.Void)
@@ -137,15 +129,15 @@ namespace Snakes
 
             for (; currentStep < GAME_DURATION; currentStep++)
             {
-                gameSession.SetSnakeList(snakes, currentStep);
-                gameSession.SetFoodList(foods, currentStep);
+                gameSession.SetSnakeList(World.Instance().Snakes, currentStep);
+                gameSession.SetFoodList(World.Instance().Foods, currentStep);
 
                 Console.WriteLine(World.GetCurrentState());
                 FileHandler.WriteToFile(World.GetCurrentState() + "\r\n");
                 
                 generateFood();
 
-                foreach (var snake in snakes)
+                foreach (var snake in World.Instance().Snakes)
                 {
                     SnakeAction action = snake.Answer();
                     resolveAction(action,snake);
@@ -154,7 +146,7 @@ namespace Snakes
                 }
 
 
-                foreach (var food in foods)
+                foreach (var food in World.Instance().Foods)
                 {
                     if (food.TimeToLive <= 0)
                     {
@@ -168,17 +160,17 @@ namespace Snakes
 
                 foreach (var deadSnake in deadSnakes)
                 {
-                    snakes.Remove(deadSnake);
+                    World.Instance().Snakes.Remove(deadSnake);
                 }
 
                 foreach (var deadFood in deadFoods)
                 {
-                    foods.Remove(deadFood);
+                    World.Instance().Foods.Remove(deadFood);
                 }
 
                 foreach (var newSnake in newSnakes)
                 {
-                    snakes.AddRange(newSnakes);
+                    World.Instance().Snakes.AddRange(newSnakes);
                 }
                 
                 newSnakes.Clear();
