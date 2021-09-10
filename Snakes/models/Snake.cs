@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snakes.behaviours;
-using Snakes.moves;
+﻿using Snakes.behaviours;
+using System;
 
 namespace Snakes.models
 {
@@ -18,7 +13,7 @@ namespace Snakes.models
         {
             this.Name = name;
             this.Cell = new Cell(x, y, CellContent.Snake);
-            this.Behaviour = (Behaviour) behaviour;
+            this.Behaviour = (Behaviour)behaviour;
             this.HitPoints = 10;
         }
 

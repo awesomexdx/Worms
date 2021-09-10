@@ -1,16 +1,16 @@
-﻿using System;
-using Snakes.behaviours;
+﻿using Snakes.behaviours;
 using Snakes.models;
 using Snakes.Utils;
+using System;
 
 namespace Snakes
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Starting life...");
-            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0,0,CellContent.Snake), new GoToFoodBehaviour(new Cell(0,0,CellContent.Snake))));
+            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))));
             World.Start();
         }
     }

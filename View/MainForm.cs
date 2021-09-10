@@ -1,16 +1,10 @@
-﻿using Snakes.models;
+﻿using Snakes.behaviours;
+using Snakes.models;
+using Snakes.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Snakes.behaviours;
-using Snakes.Utils;
 
 namespace View
 {
@@ -32,7 +26,7 @@ namespace View
         {
         }
 
-        void prepareField()
+        private void prepareField()
         {
             worldField.BackgroundColor = Color.White;
 
@@ -47,7 +41,8 @@ namespace View
                 worldField.Rows[i].HeaderCell.Value = "" + (i - 10);
             }
         }
-        void goToStep(int stepNumber)
+
+        private void goToStep(int stepNumber)
         {
             currentStep = stepNumber;
 
@@ -92,7 +87,7 @@ namespace View
                 fieldPrepared = true;
             }
             World.Reset();
-            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0,0,CellContent.Snake))));
+            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))));
             gameSession = World.Start();
             goToStep(0);
         }

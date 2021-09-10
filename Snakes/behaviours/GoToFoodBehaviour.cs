@@ -1,20 +1,18 @@
 ﻿using Snakes.models;
+using Snakes.moves;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snakes.moves;
 
 namespace Snakes.behaviours
 {
     public class GoToFoodBehaviour : Behaviour
     {
-        private List<Food> foods;
+        private readonly List<Food> foods;
         public GoToFoodBehaviour(Cell startPosition)
         {
             this.foods = World.Instance().Foods;
-            this.CurrentCell = new Cell(startPosition.X,startPosition.Y, startPosition.Content);
+            this.CurrentCell = new Cell(startPosition.X, startPosition.Y, startPosition.Content);
         }
         public override SnakeAction NextStep()
         {

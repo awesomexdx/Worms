@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Snakes.Utils
 {
-    class FileHandler
+    internal class FileHandler
     {
         public static void CreateNewGameSessionFile()
         {
             using (FileStream fstream = new FileStream($"gameSession.txt", FileMode.OpenOrCreate))
             {
-                fstream.SetLength(0);   
+                fstream.SetLength(0);
             }
         }
         public static void WriteToFile(string data)

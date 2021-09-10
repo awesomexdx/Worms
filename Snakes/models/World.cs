@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Snakes.behaviours;
+﻿using System.Collections.Generic;
 
 namespace Snakes.models
 {
     public class World
     {
-        List<Snake> snakesList = new List<Snake>();
-        List<Food> foodList = new List<Food>();
+        private List<Snake> snakesList = new List<Snake>();
+        private List<Food> foodList = new List<Food>();
 
         public List<Snake> Snakes
         {
@@ -38,7 +32,7 @@ namespace Snakes.models
 
         public static GameSession Start()
         {
-           return Instance().simulator.start();
+            return Instance().simulator.start();
         }
 
         public static void Reset()
@@ -54,7 +48,7 @@ namespace Snakes.models
         public static string GetCurrentState()
         {
             string state = "Worms:[";
-            
+
             foreach (var snake in Instance().snakesList)
             {
                 state += snake.Name + "-" + snake.HitPoints + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
@@ -68,7 +62,7 @@ namespace Snakes.models
             }
 
             state += "]";
-            
+
             return state;
         }
     }

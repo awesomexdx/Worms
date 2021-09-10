@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snakes.Utils
 {
-    static class RandomGenerator
+    internal static class RandomGenerator
     {
         public static int NextNormal(this Random r, double mu = 0, double sigma = 5)
         {

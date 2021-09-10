@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Snakes.behaviours;
+﻿using Snakes.behaviours;
 using Snakes.models;
 using Snakes.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace Snakes
 {
@@ -30,7 +26,7 @@ namespace Snakes
         {
             bool isOccupied = true;
 
-            outer:
+        outer:
             while (isOccupied)
             {
                 int x = RandomGenerator.NextNormal(new Random());
@@ -53,7 +49,7 @@ namespace Snakes
                     }
                 }
 
-                World.Instance().Foods.Add(new Food(new Cell(x,y,CellContent.Food)));
+                World.Instance().Foods.Add(new Food(new Cell(x, y, CellContent.Food)));
                 break;
             }
         }
@@ -64,7 +60,7 @@ namespace Snakes
                 if (snake.Cell.X == cell.X && snake.Cell.Y == cell.Y)
                 {
                     return CellContent.Snake;
-                } 
+                }
             }
 
             foreach (var snake in newSnakes)
@@ -113,17 +109,17 @@ namespace Snakes
         }
         private void resolveAction(SnakeAction action, Snake snake)
         {
-            Cell newCell = action.Move.Move(new Cell(snake.Cell.X,snake.Cell.Y, CellContent.Snake));
+            Cell newCell = action.Move.Move(new Cell(snake.Cell.X, snake.Cell.Y, CellContent.Snake));
 
             switch (action.ActionType)
             {
                 case ActionType.MOVE:
-                    resolseMove(newCell,snake);
+                    resolseMove(newCell, snake);
                     break;
                 case ActionType.NOTHING:
                     break;
                 case ActionType.REPRODUCE:
-                    resolveReproduce(newCell,snake);
+                    resolveReproduce(newCell, snake);
                     break;
                 default:
                     break;
@@ -142,13 +138,13 @@ namespace Snakes
 
                 Console.WriteLine(World.GetCurrentState());
                 FileHandler.WriteToFile(World.GetCurrentState() + "\r\n");
-                
+
                 generateFood();
 
                 foreach (var snake in World.Instance().Snakes)
                 {
                     SnakeAction action = snake.Answer();
-                    resolveAction(action,snake);
+                    resolveAction(action, snake);
                     snake.HitPoints--;
                     if (snake.HitPoints <= 0) { deadSnakes.Add(snake); }
                 }
@@ -180,7 +176,7 @@ namespace Snakes
                 {
                     World.Instance().Snakes.AddRange(newSnakes);
                 }
-                
+
                 newSnakes.Clear();
                 deadSnakes.Clear();
 
