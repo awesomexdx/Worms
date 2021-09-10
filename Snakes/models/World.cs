@@ -4,18 +4,12 @@ namespace Snakes.models
 {
     public class World
     {
-        private List<Snake> snakesList = new List<Snake>();
-        private List<Food> foodList = new List<Food>();
+        private readonly List<Snake> snakesList = new List<Snake>();
+        private readonly List<Food> foodList = new List<Food>();
 
-        public List<Snake> Snakes
-        {
-            get { return snakesList; }
-        }
+        public List<Snake> Snakes => snakesList;
 
-        public List<Food> Foods
-        {
-            get { return foodList; }
-        }
+        public List<Food> Foods => foodList;
 
         public Simulator simulator;
 
@@ -49,14 +43,14 @@ namespace Snakes.models
         {
             string state = "Worms:[";
 
-            foreach (var snake in Instance().snakesList)
+            foreach (Snake snake in Instance().snakesList)
             {
                 state += snake.Name + "-" + snake.HitPoints + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
             }
 
             state += "], Food:[";
 
-            foreach (var food in Instance().foodList)
+            foreach (Food food in Instance().foodList)
             {
                 state += "(" + food.Cell.X + "," + food.Cell.Y + ")";
             }

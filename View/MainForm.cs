@@ -57,7 +57,7 @@ namespace View
                 }
             }
 
-            foreach (var snake in gameSession.SnakeList[stepNumber])
+            foreach (Snake snake in gameSession.SnakeList[stepNumber])
             {
                 try
                 {
@@ -68,7 +68,7 @@ namespace View
             }
 
 
-            foreach (var food in gameSession.FoodList[stepNumber])
+            foreach (Food food in gameSession.FoodList[stepNumber])
             {
                 try
                 {
@@ -136,7 +136,7 @@ namespace View
         {
             while (started && currentStep < 99 && fieldPrepared)
             {
-                await Task.Delay((int)this.timeoutUpDown.Value);
+                await Task.Delay((int)timeoutUpDown.Value);
                 goToStep(currentStep + 1);
             }
         }
@@ -144,13 +144,17 @@ namespace View
         private void toFirstStepButton_Click(object sender, EventArgs e)
         {
             if (fieldPrepared)
+            {
                 goToStep(0);
+            }
         }
 
         private void toLastStepButton_Click(object sender, EventArgs e)
         {
             if (fieldPrepared)
+            {
                 goToStep(99);
+            }
         }
     }
 }

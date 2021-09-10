@@ -13,10 +13,10 @@ namespace Snakes
         private const int REPRODUCTION_PRICE = 10;
         public int currentStep;
 
-        private List<Snake> newSnakes = new List<Snake>();
+        private readonly List<Snake> newSnakes = new List<Snake>();
 
-        private List<Snake> deadSnakes = new List<Snake>();
-        private List<Food> deadFoods = new List<Food>();
+        private readonly List<Snake> deadSnakes = new List<Snake>();
+        private readonly List<Food> deadFoods = new List<Food>();
         private int ateFood;
         public Simulator()
         {
@@ -32,7 +32,7 @@ namespace Snakes
                 int x = RandomGenerator.NextNormal(new Random());
                 int y = RandomGenerator.NextNormal(new Random());
 
-                foreach (var snake in World.Instance().Snakes)
+                foreach (Snake snake in World.Instance().Snakes)
                 {
                     if (snake.Cell.X == x && snake.Cell.Y == y)
                     {
@@ -41,7 +41,7 @@ namespace Snakes
                     }
                 }
 
-                foreach (var food in World.Instance().Foods)
+                foreach (Food food in World.Instance().Foods)
                 {
                     if (food.Cell.X == x && food.Cell.Y == y)
                     {
@@ -55,7 +55,7 @@ namespace Snakes
         }
         private CellContent isCellOccupied(Cell cell)
         {
-            foreach (var snake in World.Instance().Snakes)
+            foreach (Snake snake in World.Instance().Snakes)
             {
                 if (snake.Cell.X == cell.X && snake.Cell.Y == cell.Y)
                 {
@@ -63,7 +63,7 @@ namespace Snakes
                 }
             }
 
-            foreach (var snake in newSnakes)
+            foreach (Snake snake in newSnakes)
             {
                 if (snake.Cell.X == cell.X && snake.Cell.Y == cell.Y)
                 {
@@ -71,7 +71,7 @@ namespace Snakes
                 }
             }
 
-            foreach (var food in World.Instance().Foods)
+            foreach (Food food in World.Instance().Foods)
             {
                 if (food.Cell.X == cell.X && food.Cell.Y == cell.Y)
                 {
@@ -141,7 +141,7 @@ namespace Snakes
 
                 generateFood();
 
-                foreach (var snake in World.Instance().Snakes)
+                foreach (Snake snake in World.Instance().Snakes)
                 {
                     SnakeAction action = snake.Answer();
                     resolveAction(action, snake);
@@ -150,7 +150,7 @@ namespace Snakes
                 }
 
 
-                foreach (var food in World.Instance().Foods)
+                foreach (Food food in World.Instance().Foods)
                 {
                     if (food.TimeToLive <= 0)
                     {
@@ -162,17 +162,17 @@ namespace Snakes
                     }
                 }
 
-                foreach (var deadSnake in deadSnakes)
+                foreach (Snake deadSnake in deadSnakes)
                 {
                     World.Instance().Snakes.Remove(deadSnake);
                 }
 
-                foreach (var deadFood in deadFoods)
+                foreach (Food deadFood in deadFoods)
                 {
                     World.Instance().Foods.Remove(deadFood);
                 }
 
-                foreach (var newSnake in newSnakes)
+                foreach (Snake newSnake in newSnakes)
                 {
                     World.Instance().Snakes.AddRange(newSnakes);
                 }

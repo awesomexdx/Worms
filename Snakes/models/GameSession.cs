@@ -17,7 +17,7 @@ namespace Snakes.models
         public void SetSnakeList(List<Snake> snakes, int step)
         {
             List<Snake> newSnakes = new List<Snake>();
-            foreach (var snake in snakes)
+            foreach (Snake snake in snakes)
             {
                 Snake newSnake = new Snake(snake.Name, new Cell(snake.Cell.X, snake.Cell.Y, CellContent.Snake),
                     snake.Behaviour);
@@ -30,7 +30,7 @@ namespace Snakes.models
         public void SetFoodList(List<Food> foods, int step)
         {
             List<Food> newFoods = new List<Food>();
-            foreach (var food in foods)
+            foreach (Food food in foods)
             {
                 Food newFood = new Food(new Cell(food.Cell.X, food.Cell.Y, CellContent.Snake));
                 newFood.TimeToLive = food.TimeToLive;

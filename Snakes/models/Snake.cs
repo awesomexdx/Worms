@@ -11,20 +11,20 @@ namespace Snakes.models
         public int HitPoints { get; set; }
         public Snake(string name, int x, int y, IBehaviour behaviour)
         {
-            this.Name = name;
-            this.Cell = new Cell(x, y, CellContent.Snake);
-            this.Behaviour = (Behaviour)behaviour;
-            this.HitPoints = 10;
+            Name = name;
+            Cell = new Cell(x, y, CellContent.Snake);
+            Behaviour = (Behaviour)behaviour;
+            HitPoints = 10;
         }
 
         public Snake(string name, Cell cell, IBehaviour behaviour)
         {
             if (cell.Content == CellContent.Snake)
             {
-                this.Name = name;
-                this.Cell = cell;
-                this.Behaviour = (Behaviour)behaviour;
-                this.HitPoints = 10;
+                Name = name;
+                Cell = cell;
+                Behaviour = (Behaviour)behaviour;
+                HitPoints = 10;
             }
             else
             {
@@ -34,9 +34,9 @@ namespace Snakes.models
 
         public SnakeAction Answer()
         {
-            this.Behaviour.CurrentCell = this.Cell;
-            this.Behaviour.SnakeHP = this.HitPoints;
-            SnakeAction action = this.Behaviour.NextStep();
+            Behaviour.CurrentCell = Cell;
+            Behaviour.SnakeHP = HitPoints;
+            SnakeAction action = Behaviour.NextStep();
             //action.Move.Move(this.Cell);
             return action;
         }

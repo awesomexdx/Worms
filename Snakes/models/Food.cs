@@ -7,7 +7,7 @@
 
         public Food(Cell cell)
         {
-            this.Cell = cell;
+            Cell = cell;
             TimeToLive = 10;
         }
     }

@@ -11,8 +11,8 @@ namespace Snakes.behaviours
         private readonly List<Food> foods;
         public GoToFoodBehaviour(Cell startPosition)
         {
-            this.foods = World.Instance().Foods;
-            this.CurrentCell = new Cell(startPosition.X, startPosition.Y, startPosition.Content);
+            foods = World.Instance().Foods;
+            CurrentCell = new Cell(startPosition.X, startPosition.Y, startPosition.Content);
         }
         public override SnakeAction NextStep()
         {
@@ -22,7 +22,7 @@ namespace Snakes.behaviours
             }
 
             List<double> distanceList = new List<double>();
-            foreach (var food in foods)
+            foreach (Food food in foods)
             {
                 distanceList.Add(Math.Abs(food.Cell.X - CurrentCell.X) + Math.Abs(food.Cell.Y - CurrentCell.Y));
             }
@@ -31,7 +31,7 @@ namespace Snakes.behaviours
 
             SnakeAction action = GetNextMove(CurrentCell, foods.ElementAt(minDistanceIndex).Cell);
 
-            if (this.SnakeHP > 30)
+            if (SnakeHP > 30)
             {
                 action.ActionType = ActionType.REPRODUCE;
             }

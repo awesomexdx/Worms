@@ -5,12 +5,12 @@ namespace Snakes.Utils
 {
     public static class NameGenerator
     {
-        private static List<string> names = new List<string>()
+        private static readonly List<string> names = new List<string>()
         {
             "John", "Bob", "Vasia", "Artem", "Ilya", "Alexandr", "Sanya", "Damir", "Grisha", "Boshy", "Zik", "Klavii", "Tazar"
         };
 
-        private static Dictionary<string, int> namesDictionary = new Dictionary<string, int>();
+        private static readonly Dictionary<string, int> namesDictionary = new Dictionary<string, int>();
 
         public static string GenerateNext()
         {
