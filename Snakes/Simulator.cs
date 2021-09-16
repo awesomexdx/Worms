@@ -1,9 +1,6 @@
 ﻿using Snakes.behaviours;
 using Snakes.models;
-using Snakes.Utils;
-using System;
 using System.Collections.Generic;
-using Snakes.Services;
 
 namespace Snakes
 {
@@ -20,14 +17,14 @@ namespace Snakes
         private readonly List<Food> deadFoods = new List<Food>();
         private int ateFood;
 
-        private World world;
+        private readonly World world;
 
         public Simulator(World world)
         {
             this.world = world;
             currentStep = 0;
         }
-        
+
         private CellContent isCellOccupied(Cell cell)
         {
             foreach (Snake snake in world.Snakes)
@@ -111,14 +108,14 @@ namespace Snakes
                 gameSession.SetSnakeList(world.Snakes, currentStep);
                 gameSession.SetFoodList(world.Foods, currentStep);
 
-                Console.WriteLine(world.GetCurrentState());
+
                 world.FileHandlerService.WriteToFile(world.GetCurrentState() + "\r\n");
 
                 world.FoodGenerator.GenerateFood(world);
 
                 foreach (Snake snake in world.Snakes)
                 {
-                    SnakeAction action = world.SnakeActionsService.Answer(snake,world);
+                    SnakeAction action = world.SnakeActionsService.Answer(snake, world);
                     resolveAction(action, snake);
                     snake.HitPoints--;
                     if (snake.HitPoints <= 0) { deadSnakes.Add(snake); }

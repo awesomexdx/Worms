@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Snakes.Services;
+using System;
 using System.Collections.Generic;
-using Snakes.Services;
 
 namespace Snakes.Utils
 {

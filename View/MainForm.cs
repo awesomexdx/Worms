@@ -1,6 +1,4 @@
-﻿using Snakes.behaviours;
-using Snakes.models;
-using Snakes.Utils;
+﻿using Snakes.models;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -10,7 +8,7 @@ namespace View
 {
     public partial class MainForm : Form
     {
-        private GameSession gameSession;
+        private readonly GameSession gameSession;
 
         private int currentStep = 0;
 

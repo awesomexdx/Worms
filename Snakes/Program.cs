@@ -1,10 +1,7 @@
-﻿using Snakes.behaviours;
-using Snakes.models;
-using Snakes.Utils;
-using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Snakes.Services;
+using Snakes.Utils;
 
 namespace Snakes
 {
@@ -22,8 +19,8 @@ namespace Snakes
                 {
 
                     services.AddHostedService<WorldSimulatorService>();
-                    
-                    services.AddScoped<INameGenerator,NameGenerator>();
+
+                    services.AddScoped<INameGenerator, NameGenerator>();
                     services.AddScoped<IFoodGenerator, FoodGenerator>();
                     services.AddScoped<ISnakeActionsService, SnakeActionsService>();
                     services.AddScoped<IFileHandler, FileHandler>();

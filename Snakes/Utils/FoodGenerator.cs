@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snakes.models;
+﻿using Snakes.models;
 using Snakes.Services;
+using System;
 
 namespace Snakes.Utils
 {
-    class FoodGenerator : IFoodGenerator
+    internal class FoodGenerator : IFoodGenerator
     {
         private const int SNAKE_REWARD = 10;
         public void GenerateFood(World world)
         {
             bool isOccupied = true;
 
-            outer:
+        outer:
             while (isOccupied)
             {
                 int x = RandomGenerator.NextNormal(new Random());

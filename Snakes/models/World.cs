@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Snakes.Services;
+﻿using Snakes.Services;
+using System.Collections.Generic;
 
 namespace Snakes.models
 {
@@ -17,14 +17,14 @@ namespace Snakes.models
         public IFoodGenerator FoodGenerator;
         public ISnakeActionsService SnakeActionsService;
         public IFileHandler FileHandlerService;
-        public World(INameGenerator nameGenerator, 
-            IFoodGenerator foodGenerator, 
+        public World(INameGenerator nameGenerator,
+            IFoodGenerator foodGenerator,
             ISnakeActionsService snakeActionsService,
             IFileHandler FileHandlerService)
         {
-            this.NameGenerator = nameGenerator;
-            this.FoodGenerator = foodGenerator;
-            this.SnakeActionsService = snakeActionsService;
+            NameGenerator = nameGenerator;
+            FoodGenerator = foodGenerator;
+            SnakeActionsService = snakeActionsService;
             this.FileHandlerService = FileHandlerService;
             simulator = new Simulator(this);
         }
@@ -36,21 +36,21 @@ namespace Snakes.models
 
         public GameSession Start()
         {
-            return this.simulator.start();
+            return simulator.start();
         }
 
         public string GetCurrentState()
         {
             string state = "Worms:[";
 
-            foreach (Snake snake in this.snakesList)
+            foreach (Snake snake in snakesList)
             {
                 state += snake.Name + "-" + snake.HitPoints + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
             }
 
             state += "], Food:[";
 
-            foreach (Food food in this.foodList)
+            foreach (Food food in foodList)
             {
                 state += "(" + food.Cell.X + "," + food.Cell.Y + ")";
             }

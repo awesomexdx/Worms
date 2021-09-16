@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Snakes.Services;
+﻿using Snakes.Services;
+using System.IO;
 
 namespace Snakes.Utils
 {

@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Snakes.behaviours;
 using Snakes.models;
-using Snakes.Utils;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Snakes.Services
 {
-    class WorldSimulatorService : IHostedService
+    internal class WorldSimulatorService : IHostedService
     {
-        private IFoodGenerator foodGenerator;
-        private INameGenerator nameGenerator;
-        private ISnakeActionsService snakeActionsService;
-        private IFileHandler fileHandlerService;
+        private readonly IFoodGenerator foodGenerator;
+        private readonly INameGenerator nameGenerator;
+        private readonly ISnakeActionsService snakeActionsService;
+        private readonly IFileHandler fileHandlerService;
 
-        public WorldSimulatorService(IFoodGenerator foodGenerator, 
+        public WorldSimulatorService(IFoodGenerator foodGenerator,
             INameGenerator nameGenerator,
             ISnakeActionsService snakeActionsService,
             IFileHandler fileHandlerService)
@@ -33,9 +29,9 @@ namespace Snakes.Services
             Console.WriteLine("Starting life...");
 
             World world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
-            //new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))
 
-            world.AddSnake(new Snake("John", new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake), world)));
+            world.AddSnake(new Snake("John", new Cell(0, 0, CellContent.Snake),
+                new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake), world)));
             world.Start();
             return Task.CompletedTask;
         }
