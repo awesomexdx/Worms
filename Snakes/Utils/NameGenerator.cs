@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Snakes.Services;
 
 namespace Snakes.Utils
 {
-    public static class NameGenerator
+    public class NameGenerator : INameGenerator
     {
         private static readonly List<string> names = new List<string>()
         {
@@ -12,7 +13,7 @@ namespace Snakes.Utils
 
         private static readonly Dictionary<string, int> namesDictionary = new Dictionary<string, int>();
 
-        public static string GenerateNext()
+        public string GenerateNext()
         {
             string name = names[new Random().Next(0, names.Count)];
             if (namesDictionary.ContainsKey(name))

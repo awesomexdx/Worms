@@ -9,9 +9,10 @@ namespace Snakes.behaviours
     public class GoToFoodBehaviour : Behaviour
     {
         private readonly List<Food> foods;
-        public GoToFoodBehaviour(Cell startPosition)
+        public GoToFoodBehaviour(Cell startPosition, World world)
         {
-            foods = World.Instance().Foods;
+            World = world;
+            foods = World.Foods;
             CurrentCell = new Cell(startPosition.X, startPosition.Y, startPosition.Content);
         }
         public override SnakeAction NextStep()

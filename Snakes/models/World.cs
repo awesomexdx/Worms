@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Snakes.Services;
 
 namespace Snakes.models
 {
@@ -6,17 +7,26 @@ namespace Snakes.models
     {
         private readonly List<Snake> snakesList = new List<Snake>();
         private readonly List<Food> foodList = new List<Food>();
-
         public List<Snake> Snakes => snakesList;
 
         public List<Food> Foods => foodList;
 
         public Simulator simulator;
 
-        private static World instance;
-        private World()
+        public INameGenerator NameGenerator;
+        public IFoodGenerator FoodGenerator;
+        public ISnakeActionsService SnakeActionsService;
+        public IFileHandler FileHandlerService;
+        public World(INameGenerator nameGenerator, 
+            IFoodGenerator foodGenerator, 
+            ISnakeActionsService snakeActionsService,
+            IFileHandler FileHandlerService)
         {
-            simulator = new Simulator();
+            this.NameGenerator = nameGenerator;
+            this.FoodGenerator = foodGenerator;
+            this.SnakeActionsService = snakeActionsService;
+            this.FileHandlerService = FileHandlerService;
+            simulator = new Simulator(this);
         }
 
         public void AddSnake(Snake snake)
@@ -24,33 +34,23 @@ namespace Snakes.models
             snakesList.Add(snake);
         }
 
-        public static GameSession Start()
+        public GameSession Start()
         {
-            return Instance().simulator.start();
+            return this.simulator.start();
         }
 
-        public static void Reset()
-        {
-            instance = null;
-        }
-
-        public static World Instance()
-        {
-            return instance ??= new World();
-        }
-
-        public static string GetCurrentState()
+        public string GetCurrentState()
         {
             string state = "Worms:[";
 
-            foreach (Snake snake in Instance().snakesList)
+            foreach (Snake snake in this.snakesList)
             {
                 state += snake.Name + "-" + snake.HitPoints + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
             }
 
             state += "], Food:[";
 
-            foreach (Food food in Instance().foodList)
+            foreach (Food food in this.foodList)
             {
                 state += "(" + food.Cell.X + "," + food.Cell.Y + ")";
             }

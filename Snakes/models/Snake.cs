@@ -31,14 +31,5 @@ namespace Snakes.models
                 throw new ArgumentException("Unable to spawn snake in non snake cell");
             }
         }
-
-        public SnakeAction Answer()
-        {
-            Behaviour.CurrentCell = Cell;
-            Behaviour.SnakeHP = HitPoints;
-            SnakeAction action = Behaviour.NextStep();
-            //action.Move.Move(this.Cell);
-            return action;
-        }
     }
 }

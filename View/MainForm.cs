@@ -86,9 +86,9 @@ namespace View
                 prepareField();
                 fieldPrepared = true;
             }
-            World.Reset();
-            World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))));
-            gameSession = World.Start();
+            //World.Reset();
+            //World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))));
+            //gameSession = World.Start();
             goToStep(0);
         }
 

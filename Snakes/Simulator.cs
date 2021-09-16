@@ -3,6 +3,7 @@ using Snakes.models;
 using Snakes.Utils;
 using System;
 using System.Collections.Generic;
+using Snakes.Services;
 
 namespace Snakes
 {
@@ -18,44 +19,18 @@ namespace Snakes
         private readonly List<Snake> deadSnakes = new List<Snake>();
         private readonly List<Food> deadFoods = new List<Food>();
         private int ateFood;
-        public Simulator()
+
+        private World world;
+
+        public Simulator(World world)
         {
+            this.world = world;
             currentStep = 0;
         }
-        public void generateFood()
-        {
-            bool isOccupied = true;
-
-        outer:
-            while (isOccupied)
-            {
-                int x = RandomGenerator.NextNormal(new Random());
-                int y = RandomGenerator.NextNormal(new Random());
-
-                foreach (Snake snake in World.Instance().Snakes)
-                {
-                    if (snake.Cell.X == x && snake.Cell.Y == y)
-                    {
-                        snake.HitPoints += SNAKE_REWARD;
-                        return;
-                    }
-                }
-
-                foreach (Food food in World.Instance().Foods)
-                {
-                    if (food.Cell.X == x && food.Cell.Y == y)
-                    {
-                        goto outer;
-                    }
-                }
-
-                World.Instance().Foods.Add(new Food(new Cell(x, y, CellContent.Food)));
-                break;
-            }
-        }
+        
         private CellContent isCellOccupied(Cell cell)
         {
-            foreach (Snake snake in World.Instance().Snakes)
+            foreach (Snake snake in world.Snakes)
             {
                 if (snake.Cell.X == cell.X && snake.Cell.Y == cell.Y)
                 {
@@ -71,11 +46,11 @@ namespace Snakes
                 }
             }
 
-            foreach (Food food in World.Instance().Foods)
+            foreach (Food food in world.Foods)
             {
                 if (food.Cell.X == cell.X && food.Cell.Y == cell.Y)
                 {
-                    ateFood = World.Instance().Foods.IndexOf(food);
+                    ateFood = world.Foods.IndexOf(food);
                     return CellContent.Food;
                 }
             }
@@ -89,7 +64,7 @@ namespace Snakes
             if (cellContent == CellContent.Food)
             {
                 snake.HitPoints += SNAKE_REWARD;
-                World.Instance().Foods.RemoveAt(ateFood);
+                world.Foods.RemoveAt(ateFood);
                 snake.Cell = newCell;
             }
             else if (cellContent == CellContent.Void)
@@ -104,7 +79,7 @@ namespace Snakes
             if (cellContent == CellContent.Void && snake.HitPoints >= 11)
             {
                 snake.HitPoints -= REPRODUCTION_PRICE;
-                newSnakes.Add(new Snake(NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour(newCell)));
+                newSnakes.Add(new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour(newCell, world)));
             }
         }
         private void resolveAction(SnakeAction action, Snake snake)
@@ -128,29 +103,29 @@ namespace Snakes
 
         public GameSession start()
         {
-            FileHandler.CreateNewGameSessionFile();
+            world.FileHandlerService.CreateNewGameSessionFile();
             GameSession gameSession = new GameSession();
 
             for (; currentStep < GAME_DURATION; currentStep++)
             {
-                gameSession.SetSnakeList(World.Instance().Snakes, currentStep);
-                gameSession.SetFoodList(World.Instance().Foods, currentStep);
+                gameSession.SetSnakeList(world.Snakes, currentStep);
+                gameSession.SetFoodList(world.Foods, currentStep);
 
-                Console.WriteLine(World.GetCurrentState());
-                FileHandler.WriteToFile(World.GetCurrentState() + "\r\n");
+                Console.WriteLine(world.GetCurrentState());
+                world.FileHandlerService.WriteToFile(world.GetCurrentState() + "\r\n");
 
-                generateFood();
+                world.FoodGenerator.GenerateFood(world);
 
-                foreach (Snake snake in World.Instance().Snakes)
+                foreach (Snake snake in world.Snakes)
                 {
-                    SnakeAction action = snake.Answer();
+                    SnakeAction action = world.SnakeActionsService.Answer(snake,world);
                     resolveAction(action, snake);
                     snake.HitPoints--;
                     if (snake.HitPoints <= 0) { deadSnakes.Add(snake); }
                 }
 
 
-                foreach (Food food in World.Instance().Foods)
+                foreach (Food food in world.Foods)
                 {
                     if (food.TimeToLive <= 0)
                     {
@@ -164,17 +139,17 @@ namespace Snakes
 
                 foreach (Snake deadSnake in deadSnakes)
                 {
-                    World.Instance().Snakes.Remove(deadSnake);
+                    world.Snakes.Remove(deadSnake);
                 }
 
                 foreach (Food deadFood in deadFoods)
                 {
-                    World.Instance().Foods.Remove(deadFood);
+                    world.Foods.Remove(deadFood);
                 }
 
                 foreach (Snake newSnake in newSnakes)
                 {
-                    World.Instance().Snakes.AddRange(newSnakes);
+                    world.Snakes.AddRange(newSnakes);
                 }
 
                 newSnakes.Clear();
