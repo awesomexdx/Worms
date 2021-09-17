@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snakes.Utils
 {
-    internal class FileHandler : IFileHandler
+    public class FileHandler : IFileHandler
     {
         public void CreateNewGameSessionFile()
         {

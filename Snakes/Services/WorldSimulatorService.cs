@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snakes.Services
 {
-    internal class WorldSimulatorService : IHostedService
+    public class WorldSimulatorService : IHostedService
     {
         private readonly IFoodGenerator foodGenerator;
         private readonly INameGenerator nameGenerator;

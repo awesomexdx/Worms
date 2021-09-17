@@ -4,7 +4,7 @@ using System;
 
 namespace Snakes.Utils
 {
-    internal class FoodGenerator : IFoodGenerator
+    public class FoodGenerator : IFoodGenerator
     {
         private const int SNAKE_REWARD = 10;
         public void GenerateFood(World world)

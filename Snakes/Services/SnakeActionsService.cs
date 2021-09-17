@@ -2,7 +2,7 @@
 
 namespace Snakes.Services
 {
-    internal class SnakeActionsService : ISnakeActionsService
+    public class SnakeActionsService : ISnakeActionsService
     {
         public SnakeAction Answer(Snake snake, World world)
         {

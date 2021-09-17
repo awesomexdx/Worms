@@ -3,21 +3,41 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Snakes.Services;
+using Snakes.Utils;
+using System.Threading;
+using Snakes.behaviours;
 
 namespace View
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IHostedService
     {
-        private readonly GameSession gameSession;
+        private readonly IFoodGenerator foodGenerator;
+        private readonly INameGenerator nameGenerator;
+        private readonly ISnakeActionsService snakeActionsService;
+        private readonly IFileHandler fileHandlerService;
+
+        private World world;
+
+        private GameSession gameSession;
 
         private int currentStep = 0;
 
         private bool fieldPrepared = false;
 
         private bool started = false;
-        public MainForm()
+        public MainForm(IFoodGenerator foodGenerator,
+            INameGenerator nameGenerator,
+            ISnakeActionsService snakeActionsService,
+            IFileHandler fileHandlerService)
         {
             InitializeComponent();
+            this.foodGenerator = foodGenerator;
+            this.nameGenerator = nameGenerator;
+            this.snakeActionsService = snakeActionsService;
+            this.fileHandlerService = fileHandlerService;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -84,14 +104,21 @@ namespace View
                 prepareField();
                 fieldPrepared = true;
             }
-            //World.Reset();
-            //World.Instance().AddSnake(new Snake(NameGenerator.GenerateNext(), new Cell(0, 0, CellContent.Snake), new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake))));
-            //gameSession = World.Start();
+
+            this.world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
+
+            this.world.AddSnake(new Snake("John", new Cell(0, 0, CellContent.Snake),
+                new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake), world)));
+            this.gameSession = world.Start();
+
             goToStep(0);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            var cancellationTokenSource = new CancellationTokenSource(1000);
+            
+            StopAsync(cancellationTokenSource.Token);
         }
 
         private void next_Click(object sender, EventArgs e)
@@ -153,6 +180,17 @@ namespace View
             {
                 goToStep(99);
             }
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            Application.Run(this);
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }
