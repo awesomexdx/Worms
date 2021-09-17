@@ -11,7 +11,7 @@ namespace Snakes.Utils
             "John", "Bob", "Vasia", "Artem", "Ilya", "Alexandr", "Sanya", "Damir", "Grisha", "Boshy", "Zik", "Klavii", "Tazar"
         };
 
-        private static readonly Dictionary<string, int> namesDictionary = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> namesDictionary = new Dictionary<string, int>();
 
         public string GenerateNext()
         {
