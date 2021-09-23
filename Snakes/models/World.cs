@@ -5,11 +5,19 @@ namespace Snakes.models
 {
     public class World
     {
-        private readonly List<Snake> snakesList = new List<Snake>();
-        private readonly List<Food> foodList = new List<Food>();
-        public List<Snake> Snakes => snakesList;
+        private List<Snake> snakesList = new List<Snake>();
+        private List<Food> foodList = new List<Food>();
+        public List<Snake> Snakes
+        {
+            get => snakesList;
+            set => snakesList = value;
+        }
 
-        public List<Food> Foods => foodList;
+        public List<Food> Foods
+        {
+            get => foodList;
+            set => foodList = value;
+        }
 
         public Simulator simulator;
 
@@ -20,12 +28,12 @@ namespace Snakes.models
         public World(INameGenerator nameGenerator,
             IFoodGenerator foodGenerator,
             ISnakeActionsService snakeActionsService,
-            IFileHandler FileHandlerService)
+            IFileHandler fileHandlerService)
         {
             NameGenerator = nameGenerator;
             FoodGenerator = foodGenerator;
             SnakeActionsService = snakeActionsService;
-            this.FileHandlerService = FileHandlerService;
+            FileHandlerService = fileHandlerService;
             simulator = new Simulator(this);
         }
 

@@ -4,6 +4,6 @@ namespace Snakes.Services
 {
     public interface IFoodGenerator
     {
-        public void GenerateFood(World world);
+        public Cell GenerateFood(World world);
     }
 }

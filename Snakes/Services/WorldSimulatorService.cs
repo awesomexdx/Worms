@@ -30,8 +30,8 @@ namespace Snakes.Services
 
             World world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
-            world.AddSnake(new Snake("John", new Cell(0, 0, CellContent.Snake),
-                new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake), world)));
+            world.AddSnake(new Snake("John", new Cell(0, 0),
+                new GoToFoodBehaviour(new Cell(0, 0), world)));
             world.Start();
             return Task.CompletedTask;
         }

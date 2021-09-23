@@ -7,7 +7,7 @@ namespace Snakes.Utils
     public class FoodGenerator : IFoodGenerator
     {
         private const int SNAKE_REWARD = 10;
-        public void GenerateFood(World world)
+        public Cell GenerateFood(World world)
         {
             bool isOccupied = true;
 
@@ -22,7 +22,7 @@ namespace Snakes.Utils
                     if (snake.Cell.X == x && snake.Cell.Y == y)
                     {
                         snake.HitPoints += SNAKE_REWARD;
-                        return;
+                        return new Cell(x, y);
                     }
                 }
 
@@ -34,9 +34,11 @@ namespace Snakes.Utils
                     }
                 }
 
-                world.Foods.Add(new Food(new Cell(x, y, CellContent.Food)));
-                break;
+                world.Foods.Add(new Food(new Cell(x, y)));
+                return new Cell(x, y);
             }
+
+            return new Cell(500, 500);
         }
     }
 }

@@ -1,18 +1,14 @@
-﻿using Snakes.models;
+﻿using Snakes.behaviours;
+using Snakes.models;
+using Snakes.Services;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Snakes.Services;
-using Snakes.Utils;
-using System.Threading;
-using Snakes.behaviours;
 
 namespace View
 {
-    public partial class MainForm : Form, IHostedService
+    public partial class MainForm : Form
     {
         private readonly IFoodGenerator foodGenerator;
         private readonly INameGenerator nameGenerator;
@@ -105,20 +101,17 @@ namespace View
                 fieldPrepared = true;
             }
 
-            this.world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
+            world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
-            this.world.AddSnake(new Snake("John", new Cell(0, 0, CellContent.Snake),
-                new GoToFoodBehaviour(new Cell(0, 0, CellContent.Snake), world)));
-            this.gameSession = world.Start();
+            world.AddSnake(new Snake("John", new Cell(0, 0),
+                new GoToFoodBehaviour(new Cell(0, 0), world)));
+            gameSession = world.Start();
 
             goToStep(0);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            var cancellationTokenSource = new CancellationTokenSource(1000);
-            
-            StopAsync(cancellationTokenSource.Token);
         }
 
         private void next_Click(object sender, EventArgs e)
@@ -180,17 +173,6 @@ namespace View
             {
                 goToStep(99);
             }
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            Application.Run(this);
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Snakes.behaviours
         {
             World = world;
             foods = World.Foods;
-            CurrentCell = new Cell(startPosition.X, startPosition.Y, startPosition.Content);
+            CurrentCell = new Cell(startPosition.X, startPosition.Y);
         }
         public override SnakeAction NextStep()
         {

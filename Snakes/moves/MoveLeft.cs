@@ -2,7 +2,7 @@
 
 namespace Snakes.moves
 {
-    internal class MoveLeft : IMove
+    public class MoveLeft : IMove
     {
         public Cell Move(Cell cell)
         {

@@ -2,7 +2,7 @@
 
 namespace Snakes.moves
 {
-    internal class MoveNoWhere : IMove
+    public class MoveNoWhere : IMove
     {
         public Cell Move(Cell cell)
         {
