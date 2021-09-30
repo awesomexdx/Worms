@@ -104,7 +104,7 @@ namespace View
             world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
             world.AddSnake(new Snake("John", new Cell(0, 0),
-                new GoToFoodBehaviour(new Cell(0, 0), world)));
+                new GoToFoodBehaviour()));
             gameSession = world.Start();
 
             goToStep(0);
@@ -171,6 +171,56 @@ namespace View
         {
             if (fieldPrepared)
             {
+                goToStep(99);
+            }
+        }
+
+        private Task updateProgress(int val)
+        {
+            progressSimulations.Value = val;
+            return Task.CompletedTask;
+        }
+
+        private async void bestOfButton_Click(object sender, EventArgs e)
+        {
+            GameSession bestGameSession = new GameSession();
+            int maxSnakes = 0;
+            progressSimulations.MaxValue = (int)countOfGenerationsUpDown.Value;
+            progressSimulations.Value = 0;
+            progressSimulations.BackColor = Color.White;
+            progressSimulations.ForeColor = Color.Black;
+            progressSimulations.BorderColor = Color.Black;
+
+            for (int i = 0; i < countOfGenerationsUpDown.Value; i++)
+            {
+                world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
+
+                world.AddSnake(new Snake("John", new Cell(0, 0),
+                    new GoToFoodBehaviour()));
+                gameSession = world.Start();
+                if (maxSnakes < gameSession.SnakeList[99].Count)
+                {
+                    maxSnakes = gameSession.SnakeList[99].Count;
+                    bestGameSession = gameSession;
+                }
+
+                await updateProgress(i);
+                await Task.Delay(2);
+            }
+
+            progressSimulations.Value = (int)countOfGenerationsUpDown.Value;
+
+            gameSession = bestGameSession;
+            countOfSnakesLable.Text = $"Best count of snakes: {maxSnakes}, Dead food count: {gameSession.DeadFoodCount}";
+
+            if (fieldPrepared)
+            {
+                goToStep(99);
+            }
+            else
+            {
+                prepareField();
+                fieldPrepared = true;
                 goToStep(99);
             }
         }

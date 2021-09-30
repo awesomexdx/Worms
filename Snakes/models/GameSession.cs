@@ -8,10 +8,13 @@ namespace Snakes.models
 
         public Dictionary<int, List<Food>> FoodList { get; set; }
 
+        public int DeadFoodCount { get; set; }
+
         public GameSession()
         {
             SnakeList = new Dictionary<int, List<Snake>>();
             FoodList = new Dictionary<int, List<Food>>();
+            DeadFoodCount = 0;
         }
 
         public void SetSnakeList(List<Snake> snakes, int step)

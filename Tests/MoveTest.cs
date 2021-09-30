@@ -21,7 +21,7 @@ namespace Tests
             world = new World(new NameGenerator(), new FoodGenerator(), new SnakeActionsService(), new FileHandler());
             world.Foods = new List<Food>() { new Food(new Cell(1, 0)) };
             world.AddSnake(new Snake("John", new Cell(0, 0),
-                new GoToFoodBehaviour(new Cell(0, 0), world)));
+                new GoToFoodBehaviour()));
         }
 
         [Test]

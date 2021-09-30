@@ -60,7 +60,7 @@ namespace Snakes.Simulation
             if (cellContent == CellContent.Void && snake.HitPoints >= 11)
             {
                 snake.HitPoints -= REPRODUCTION_PRICE;
-                newSnakes.Add(new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour(newCell, world)));
+                newSnakes.Add(new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour()));
             }
         }
         public static void ResolveAction(World world, SnakeAction action, Snake snake, List<Snake> newSnakes)

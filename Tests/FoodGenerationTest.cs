@@ -37,7 +37,8 @@ namespace Tests
         [Test]
         public void FoodGenerationOneTest()
         {
-            world.FoodGenerator.GenerateFood(world);
+            Cell generatedCell = world.FoodGenerator.GenerateFood(new List<Food>(world.Foods), new List<Snake>(world.Snakes));
+            world.Foods.Add(new Food(generatedCell));
             world.Foods.Count.Should().Be(1);
         }
 
@@ -47,7 +48,8 @@ namespace Tests
             int oneHundred = 100;
             for (int i = 0; i < oneHundred; i++)
             {
-                world.FoodGenerator.GenerateFood(world);
+                Cell generatedCell = world.FoodGenerator.GenerateFood(new List<Food>(world.Foods), new List<Snake>(world.Snakes));
+                world.Foods.Add(new Food(generatedCell));
             }
 
             List<Food> uniqValuesList = world.Foods.Distinct<Food>(new FoodGenerationTest.PartialComparer()).ToList();
@@ -66,10 +68,15 @@ namespace Tests
 
             for (; i < foodAmount; i++)
             {
-                Cell generatedCell = world.FoodGenerator.GenerateFood(world);
+                Cell generatedCell = world.FoodGenerator.GenerateFood(new List<Food>(world.Foods), new List<Snake>(world.Snakes));
+                Food newFood = new Food(generatedCell);
+                world.Foods.Add(newFood);
+
                 if (generatedCell.Equals(snakeCell))
                 {
                     found = true;
+                    world.Foods.Remove(newFood);
+                    world.Snakes[0].HitPoints += 10;
                     break;
                 }
             }

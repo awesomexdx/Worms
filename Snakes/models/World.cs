@@ -1,5 +1,6 @@
 ﻿using Snakes.Services;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Snakes.models
 {
@@ -49,23 +50,29 @@ namespace Snakes.models
 
         public string GetCurrentState()
         {
-            string state = "Worms:[";
+            StringBuilder state = new StringBuilder("Worms:[");
 
             foreach (Snake snake in snakesList)
             {
-                state += snake.Name + "-" + snake.HitPoints + "(" + snake.Cell.X + "," + snake.Cell.Y + ")";
+                state.Append($"{snake.Name}-{snake.HitPoints}({snake.Cell.X},{snake.Cell.Y}),");
             }
 
-            state += "], Food:[";
+            if (snakesList.Count != 0)
+            {
+                state.Remove(state.Length - 1, 1);
+            }
+
+            state.Append("],Food:[");
 
             foreach (Food food in foodList)
             {
-                state += "(" + food.Cell.X + "," + food.Cell.Y + ")";
+                state.Append($"({food.Cell.X},{food.Cell.Y}),");
             }
 
-            state += "]";
+            state.Remove(state.Length - 1, 1);
+            state.Append("]");
 
-            return state;
+            return state.ToString();
         }
     }
 }

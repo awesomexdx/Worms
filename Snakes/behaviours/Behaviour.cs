@@ -15,6 +15,6 @@ namespace Snakes.behaviours
         {
             return new SnakeAction(prevMove, ActionType.MOVE);
         }
-        public abstract SnakeAction NextStep();
+        public abstract SnakeAction NextStep(Snake snake, List<Food> foods, List<Snake> snakes);
     }
 }

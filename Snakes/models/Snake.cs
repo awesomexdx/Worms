@@ -23,5 +23,20 @@ namespace Snakes.models
             Behaviour = (Behaviour)behaviour;
             HitPoints = 10;
         }
+
+        public Snake(string name, int x, int y)
+        {
+            Name = name;
+            Cell = new Cell(x, y);
+            Behaviour = new GoToFoodBehaviour();
+            HitPoints = 10;
+        }
+
+        public Snake(Snake snake)
+        {
+            Name = snake.Name;
+            Cell = snake.Cell;
+            HitPoints = snake.HitPoints;
+        }
     }
 }

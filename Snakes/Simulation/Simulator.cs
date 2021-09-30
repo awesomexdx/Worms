@@ -1,12 +1,14 @@
 ﻿using Snakes.models;
 using Snakes.Simulation;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Snakes
 {
     public class Simulator
     {
         private const int GAME_DURATION = 100;
+        private const int SNAKE_REWARD = 10;
         public int currentStep;
 
         private readonly List<Snake> newSnakes = new List<Snake>();
@@ -24,21 +26,29 @@ namespace Snakes
 
         public GameSession start()
         {
-            world.FileHandlerService.CreateNewGameSessionFile();
             GameSession gameSession = new GameSession();
+            world.FileHandlerService.TextWriter = File.CreateText("gameSession.txt");
 
             for (; currentStep < GAME_DURATION; currentStep++)
             {
                 gameSession.SetSnakeList(world.Snakes, currentStep);
                 gameSession.SetFoodList(world.Foods, currentStep);
 
+                world.FileHandlerService.WriteToTextWriter(world.GetCurrentState());
 
-                world.FileHandlerService.WriteToFile(world.GetCurrentState() + "\r\n");
+                Cell generaredCell = world.FoodGenerator.GenerateFood(new List<Food>(world.Foods), new List<Snake>(world.Snakes));
 
-                world.FoodGenerator.GenerateFood(world);
+                Food newFood = new Food(generaredCell);
+                world.Foods.Add(newFood);
 
                 foreach (Snake snake in world.Snakes)
                 {
+                    if (snake.Cell.Equals(generaredCell))
+                    {
+                        snake.HitPoints += SNAKE_REWARD;
+                        world.Foods.Remove(newFood);
+                    }
+
                     SnakeAction action = world.SnakeActionsService.Answer(snake, world);
                     SimulationHelper.ResolveAction(world, action, snake, newSnakes);
                     snake.HitPoints--;
@@ -51,6 +61,7 @@ namespace Snakes
                     if (food.TimeToLive <= 0)
                     {
                         deadFoods.Add(food);
+                        gameSession.DeadFoodCount++;
                     }
                     else
                     {
@@ -75,6 +86,7 @@ namespace Snakes
 
             }
 
+            world.FileHandlerService.TextWriter.Close();
             return gameSession;
         }
     }

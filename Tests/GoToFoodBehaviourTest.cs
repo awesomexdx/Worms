@@ -4,6 +4,7 @@ using Snakes.behaviours;
 using Snakes.models;
 using Snakes.Services;
 using Snakes.Utils;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -17,7 +18,7 @@ namespace Tests
             world = new World(new NameGenerator(), new FoodGenerator(), new SnakeActionsService(), new FileHandler());
             world.Foods.Clear();
             world.Snakes.Clear();
-            world.AddSnake(new Snake("Test", 0, 0, new GoToFoodBehaviour(new Cell(0, 0), world)));
+            world.AddSnake(new Snake("Test", 0, 0, new GoToFoodBehaviour()));
         }
 
         [Test]
@@ -28,8 +29,8 @@ namespace Tests
             world.Foods.Add(new Food(new Cell(steps, 0)));
             for (int i = 0; i < steps; i++)
             {
-                snake.Behaviour.CurrentCell = snake.Behaviour.NextStep().Move.Move(snake.Behaviour.CurrentCell);
-                snake.Behaviour.CurrentCell.Should().Be(new Cell(i + 1, 0));
+                snake.Cell = snake.Behaviour.NextStep(new Snake(snake), new List<Food>(world.Foods), null).Move.Move(snake.Cell);
+                snake.Cell.Should().Be(new Cell(i + 1, 0));
             }
         }
 
@@ -41,8 +42,8 @@ namespace Tests
             world.Foods.Add(new Food(new Cell(0, steps)));
             for (int i = 0; i < steps; i++)
             {
-                snake.Behaviour.CurrentCell = snake.Behaviour.NextStep().Move.Move(snake.Behaviour.CurrentCell);
-                snake.Behaviour.CurrentCell.Should().Be(new Cell(0, i + 1));
+                snake.Cell = snake.Behaviour.NextStep(new Snake(snake), new List<Food>(world.Foods), null).Move.Move(snake.Cell);
+                snake.Cell.Should().Be(new Cell(0, i + 1));
             }
         }
 
@@ -54,14 +55,14 @@ namespace Tests
             world.Foods.Add(new Food(new Cell(steps, steps)));
             for (int i = 0; i < steps * 2; i++)
             {
-                snake.Behaviour.CurrentCell = snake.Behaviour.NextStep().Move.Move(snake.Behaviour.CurrentCell);
-                if (snake.Behaviour.CurrentCell.X < steps)
+                snake.Cell = snake.Behaviour.NextStep(new Snake(snake), new List<Food>(world.Foods), null).Move.Move(snake.Cell);
+                if (snake.Cell.X < steps)
                 {
-                    snake.Behaviour.CurrentCell.Should().Be(new Cell(i + 1, 0));
+                    snake.Cell.Should().Be(new Cell(i + 1, 0));
                 }
                 else
                 {
-                    snake.Behaviour.CurrentCell.Should().Be(new Cell(steps, i - steps + 1));
+                    snake.Cell.Should().Be(new Cell(steps, i - steps + 1));
                 }
             }
         }

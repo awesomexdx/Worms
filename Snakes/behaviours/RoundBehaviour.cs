@@ -1,5 +1,6 @@
 ﻿using Snakes.models;
 using Snakes.moves;
+using System.Collections.Generic;
 
 namespace Snakes.behaviours
 {
@@ -9,7 +10,7 @@ namespace Snakes.behaviours
         {
             PrevAction = new SnakeAction(allMoves[0], ActionType.NOTHING);
         }
-        public override SnakeAction NextStep()
+        public override SnakeAction NextStep(Snake snake, List<Food> foods, List<Snake> snakes)
         {
             switch (PrevAction.ActionType)
             {

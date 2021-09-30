@@ -8,14 +8,7 @@ namespace Snakes.behaviours
 {
     public class GoToFoodBehaviour : Behaviour
     {
-        private readonly List<Food> foods;
-        public GoToFoodBehaviour(Cell startPosition, World world)
-        {
-            World = world;
-            foods = World.Foods;
-            CurrentCell = new Cell(startPosition.X, startPosition.Y);
-        }
-        public override SnakeAction NextStep()
+        public override SnakeAction NextStep(Snake snake, List<Food> foods, List<Snake> snakes)
         {
             if (foods.Count == 0)
             {
@@ -25,14 +18,14 @@ namespace Snakes.behaviours
             List<double> distanceList = new List<double>();
             foreach (Food food in foods)
             {
-                distanceList.Add(Math.Abs(food.Cell.X - CurrentCell.X) + Math.Abs(food.Cell.Y - CurrentCell.Y));
+                distanceList.Add(Math.Abs(food.Cell.X - snake.Cell.X) + Math.Abs(food.Cell.Y - snake.Cell.Y));
             }
 
             int minDistanceIndex = distanceList.IndexOf(distanceList.Min());
 
-            SnakeAction action = GetNextMove(CurrentCell, foods.ElementAt(minDistanceIndex).Cell);
+            SnakeAction action = GetNextMove(snake.Cell, foods.ElementAt(minDistanceIndex).Cell);
 
-            if (SnakeHP > 30)
+            if (SnakeHP > 10)
             {
                 action.ActionType = ActionType.REPRODUCE;
             }
