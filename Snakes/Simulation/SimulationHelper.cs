@@ -61,6 +61,14 @@ namespace Snakes.Simulation
             {
                 snake.HitPoints -= REPRODUCTION_PRICE;
                 newSnakes.Add(new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour()));
+            } else if (cellContent == CellContent.Food && snake.HitPoints >= 11)
+            {
+                snake.HitPoints -= REPRODUCTION_PRICE;
+                var newSnake = new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y,
+                    new GoToFoodBehaviour());
+                newSnake.HitPoints += SNAKE_REWARD;
+                world.Foods.RemoveAt(world.Foods.IndexOf(world.Foods.First(x => x.Cell.X == newCell.X && x.Cell.Y == newCell.Y)));
+                newSnakes.Add(newSnake);
             }
         }
         public static void ResolveAction(World world, SnakeAction action, Snake snake, List<Snake> newSnakes)

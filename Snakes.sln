@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snakes", "Snakes\Snakes.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View", "View\View.csproj", "{7AD44158-3E1E-490B-9271-3ED68B4A317E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{D1B75256-A6CE-42DB-A56B-B149F86A2543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{D1B75256-A6CE-42DB-A56B-B149F86A2543}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

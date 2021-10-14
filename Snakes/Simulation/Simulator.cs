@@ -2,6 +2,7 @@
 using Snakes.Simulation;
 using System.Collections.Generic;
 using System.IO;
+using Snakes.DataBase.Models;
 
 namespace Snakes
 {
@@ -10,7 +11,7 @@ namespace Snakes
         private const int GAME_DURATION = 100;
         private const int SNAKE_REWARD = 10;
         public int currentStep;
-
+        
         private readonly List<Snake> newSnakes = new List<Snake>();
 
         private readonly List<Snake> deadSnakes = new List<Snake>();
@@ -88,6 +89,21 @@ namespace Snakes
 
             world.FileHandlerService.TextWriter.Close();
             return gameSession;
+        }
+
+        public void startForDb()
+        {
+            int curStep;
+            for (curStep = 0; curStep < GAME_DURATION; curStep++)
+            {
+                Cell generaredCell = world.FoodGenerator.GenerateFood(new List<Food>(world.Foods), new List<Snake>());
+                WorldBehaviourModel worldBehaviour = new WorldBehaviourModel();
+                worldBehaviour.Name = world.WorldBehaviourName;
+                worldBehaviour.Step = curStep;
+                worldBehaviour.FoodX = generaredCell.X;
+                worldBehaviour.FoodY = generaredCell.Y;
+                world.WorldBehaviour.Create(worldBehaviour);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using Snakes.models;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Snakes.DataBase.Repositories;
 
 namespace Snakes.Services
 {
@@ -13,16 +14,23 @@ namespace Snakes.Services
         private readonly INameGenerator nameGenerator;
         private readonly ISnakeActionsService snakeActionsService;
         private readonly IFileHandler fileHandlerService;
+        private readonly IWorldBehaviourRepository worldBehaviourRepository;
+        private readonly string behaviourName;
 
         public WorldSimulatorService(IFoodGenerator foodGenerator,
             INameGenerator nameGenerator,
             ISnakeActionsService snakeActionsService,
-            IFileHandler fileHandlerService)
+            IFileHandler fileHandlerService,
+            IWorldBehaviourRepository worldBehaviourRepository,
+            string behaviourName
+            )
         {
             this.foodGenerator = foodGenerator;
             this.nameGenerator = nameGenerator;
             this.snakeActionsService = snakeActionsService;
             this.fileHandlerService = fileHandlerService;
+            this.worldBehaviourRepository = worldBehaviourRepository;
+            this.behaviourName = behaviourName;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -33,6 +41,10 @@ namespace Snakes.Services
             world.AddSnake(new Snake("John", new Cell(0, 0),
                 new GoToFoodBehaviour()));
             world.Start();
+
+            World worldDb = new World(foodGenerator, worldBehaviourRepository, behaviourName);
+            worldDb.StartForDb();
+
             return Task.CompletedTask;
         }
 

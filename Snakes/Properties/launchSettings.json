@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Snakes": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "SecondTest"
     },
     "WSL 2": {
       "commandName": "WSL2",

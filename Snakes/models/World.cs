@@ -1,6 +1,7 @@
 ﻿using Snakes.Services;
 using System.Collections.Generic;
 using System.Text;
+using Snakes.DataBase.Repositories;
 
 namespace Snakes.models
 {
@@ -26,6 +27,8 @@ namespace Snakes.models
         public IFoodGenerator FoodGenerator;
         public ISnakeActionsService SnakeActionsService;
         public IFileHandler FileHandlerService;
+        public IWorldBehaviourRepository WorldBehaviour;
+        public string WorldBehaviourName;
         public World(INameGenerator nameGenerator,
             IFoodGenerator foodGenerator,
             ISnakeActionsService snakeActionsService,
@@ -38,6 +41,14 @@ namespace Snakes.models
             simulator = new Simulator(this);
         }
 
+        public World(IFoodGenerator foodGenerator, IWorldBehaviourRepository worldBehaviour, string Name)
+        {
+            FoodGenerator = foodGenerator;
+            WorldBehaviour = worldBehaviour;
+            WorldBehaviourName = Name;
+            simulator = new Simulator(this);
+        }
+
         public void AddSnake(Snake snake)
         {
             snakesList.Add(snake);
@@ -46,6 +57,11 @@ namespace Snakes.models
         public GameSession Start()
         {
             return simulator.start();
+        }
+
+        public void StartForDb()
+        {
+            simulator.startForDb();
         }
 
         public string GetCurrentState()
