@@ -5,6 +5,9 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
+using Snakes.DataBase.Base;
+using Snakes.DataBase.Repositories;
 
 namespace View
 {
@@ -14,6 +17,7 @@ namespace View
         private readonly INameGenerator nameGenerator;
         private readonly ISnakeActionsService snakeActionsService;
         private readonly IFileHandler fileHandlerService;
+        private readonly IWorldBehaviourRepository worldBehaviourRepository;
 
         private World world;
 
@@ -27,13 +31,15 @@ namespace View
         public MainForm(IFoodGenerator foodGenerator,
             INameGenerator nameGenerator,
             ISnakeActionsService snakeActionsService,
-            IFileHandler fileHandlerService)
+            IFileHandler fileHandlerService,
+            IWorldBehaviourRepository worldBehaviourRepository)
         {
             InitializeComponent();
             this.foodGenerator = foodGenerator;
             this.nameGenerator = nameGenerator;
             this.snakeActionsService = snakeActionsService;
             this.fileHandlerService = fileHandlerService;
+            this.worldBehaviourRepository = worldBehaviourRepository;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -222,6 +228,25 @@ namespace View
                 prepareField();
                 fieldPrepared = true;
                 goToStep(99);
+            }
+        }
+
+        private void simulateWorldBehaviour_Click(object sender, EventArgs e)
+        {
+            World worldForDb = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
+            worldForDb.WorldBehaviour = worldBehaviourRepository;
+            worldForDb.AddSnake(new Snake("John", new Cell(0, 0),
+                new GoToFoodBehaviour()));
+            gameSession = worldForDb.SimulateSessionByName(behaviourName.Text);
+            if (fieldPrepared)
+            {
+                goToStep(0);
+            }
+            else
+            {
+                prepareField();
+                fieldPrepared = true;
+                goToStep(0);
             }
         }
     }

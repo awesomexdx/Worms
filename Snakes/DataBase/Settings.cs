@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snakes.DataBase
 {
-    class Settings
+    public class Settings
     {
         public string ConnectionString;
     }

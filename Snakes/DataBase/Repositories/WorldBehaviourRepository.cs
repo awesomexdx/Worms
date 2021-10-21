@@ -5,7 +5,7 @@ using Snakes.DataBase.Models;
 
 namespace Snakes.DataBase.Repositories
 {
-    class WorldBehaviourRepository : IWorldBehaviourRepository
+    public class WorldBehaviourRepository : IWorldBehaviourRepository
     {
         private readonly MainDbContext _сontext;
         public WorldBehaviourRepository(MainDbContext сontext)

@@ -42,6 +42,8 @@ namespace View
             this.countOfGenerationsUpDown = new System.Windows.Forms.NumericUpDown();
             this.countOfSnakesLable = new System.Windows.Forms.Label();
             this.progressSimulations = new View.ProgressWithText();
+            this.simulateWorldBehaviour = new System.Windows.Forms.Button();
+            this.behaviourName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.worldField)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeoutUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.countOfGenerationsUpDown)).BeginInit();
@@ -58,7 +60,7 @@ namespace View
             this.worldField.Name = "worldField";
             this.worldField.RowHeadersWidth = 51;
             this.worldField.RowTemplate.Height = 29;
-            this.worldField.Size = new System.Drawing.Size(951, 371);
+            this.worldField.Size = new System.Drawing.Size(1173, 371);
             this.worldField.TabIndex = 0;
             // 
             // startButton
@@ -103,7 +105,7 @@ namespace View
             // continueButton
             // 
             this.continueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.continueButton.Location = new System.Drawing.Point(688, 15);
+            this.continueButton.Location = new System.Drawing.Point(910, 15);
             this.continueButton.Name = "continueButton";
             this.continueButton.Size = new System.Drawing.Size(173, 37);
             this.continueButton.TabIndex = 5;
@@ -114,7 +116,7 @@ namespace View
             // timeoutUpDown
             // 
             this.timeoutUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.timeoutUpDown.Location = new System.Drawing.Point(867, 21);
+            this.timeoutUpDown.Location = new System.Drawing.Point(1089, 21);
             this.timeoutUpDown.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -132,7 +134,7 @@ namespace View
             // toFirstStepButton
             // 
             this.toFirstStepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.toFirstStepButton.Location = new System.Drawing.Point(588, 15);
+            this.toFirstStepButton.Location = new System.Drawing.Point(810, 15);
             this.toFirstStepButton.Name = "toFirstStepButton";
             this.toFirstStepButton.Size = new System.Drawing.Size(94, 37);
             this.toFirstStepButton.TabIndex = 7;
@@ -143,7 +145,7 @@ namespace View
             // toLastStepButton
             // 
             this.toLastStepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.toLastStepButton.Location = new System.Drawing.Point(488, 15);
+            this.toLastStepButton.Location = new System.Drawing.Point(710, 15);
             this.toLastStepButton.Name = "toLastStepButton";
             this.toLastStepButton.Size = new System.Drawing.Size(94, 37);
             this.toLastStepButton.TabIndex = 8;
@@ -191,7 +193,7 @@ namespace View
             this.progressSimulations.BorderColor = System.Drawing.Color.Black;
             this.progressSimulations.BorderWidth = 2;
             this.progressSimulations.ForeColor = System.Drawing.Color.Black;
-            this.progressSimulations.Location = new System.Drawing.Point(488, 455);
+            this.progressSimulations.Location = new System.Drawing.Point(710, 455);
             this.progressSimulations.MaxValue = 100;
             this.progressSimulations.MinValue = 0;
             this.progressSimulations.Name = "progressSimulations";
@@ -203,11 +205,32 @@ namespace View
             this.progressSimulations.Text = "progressWithText1";
             this.progressSimulations.Value = 0;
             // 
+            // simulateWorldBehaviour
+            // 
+            this.simulateWorldBehaviour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.simulateWorldBehaviour.Location = new System.Drawing.Point(257, 445);
+            this.simulateWorldBehaviour.Name = "simulateWorldBehaviour";
+            this.simulateWorldBehaviour.Size = new System.Drawing.Size(191, 40);
+            this.simulateWorldBehaviour.TabIndex = 13;
+            this.simulateWorldBehaviour.Text = "Simulate world behaviour";
+            this.simulateWorldBehaviour.UseVisualStyleBackColor = true;
+            this.simulateWorldBehaviour.Click += new System.EventHandler(this.simulateWorldBehaviour_Click);
+            // 
+            // behaviourName
+            // 
+            this.behaviourName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.behaviourName.Location = new System.Drawing.Point(454, 451);
+            this.behaviourName.Name = "behaviourName";
+            this.behaviourName.Size = new System.Drawing.Size(125, 27);
+            this.behaviourName.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(975, 491);
+            this.ClientSize = new System.Drawing.Size(1197, 491);
+            this.Controls.Add(this.behaviourName);
+            this.Controls.Add(this.simulateWorldBehaviour);
             this.Controls.Add(this.progressSimulations);
             this.Controls.Add(this.countOfSnakesLable);
             this.Controls.Add(this.countOfGenerationsUpDown);
@@ -248,6 +271,8 @@ namespace View
         private System.Windows.Forms.NumericUpDown countOfGenerationsUpDown;
         private System.Windows.Forms.Label countOfSnakesLable;
         private ProgressWithText progressSimulations;
+        private System.Windows.Forms.Button simulateWorldBehaviour;
+        private System.Windows.Forms.TextBox behaviourName;
     }
 }
 
