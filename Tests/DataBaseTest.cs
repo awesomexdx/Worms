@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Snakes.behaviours;
 using Snakes.DataBase.Base;
 using Snakes.DataBase.Repositories;
 using Snakes.models;
+using Snakes.Services;
 using Snakes.Utils;
 
 namespace Tests
@@ -24,15 +26,33 @@ namespace Tests
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
             var context = new MainDbContext(options);
-            var models = world.simulator.StartForDbInMemory();
-
-            foreach (var worldBehaviourModel in models)
-            {
-                context.WorldBehaviours.Add(worldBehaviourModel);
-            }
-            context.SaveChanges();
+            world.WorldBehaviour = new WorldBehaviourRepository(context);
+            var models = world.simulator.StartForDb();
 
             return context;
+        }
+
+        private MainDbContext GetContext()
+        {
+            var options = new DbContextOptionsBuilder<MainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            var context = new MainDbContext(options);
+
+            return context;
+        }
+
+        private World GetNewWorld()
+        {
+            World localWorld = new World(new FoodGenerator(), worldBehaviourName);
+            localWorld.FileHandlerService = new FileHandler();
+            localWorld.SnakeActionsService = new SnakeActionsService();
+            localWorld.NameGenerator = new NameGenerator();
+
+            localWorld.WorldBehaviour = new WorldBehaviourRepository(GetContext());
+            localWorld.AddSnake(new Snake("John", new Cell(0, 0),
+                new GoToFoodBehaviour()));
+            return localWorld;
         }
 
         private class PartialComparer : IEqualityComparer<Food>
@@ -52,6 +72,10 @@ namespace Tests
         public void Setup()
         {
             this.world = new World(new FoodGenerator(), worldBehaviourName);
+            this.world.FileHandlerService = new FileHandler();
+            this.world.SnakeActionsService = new SnakeActionsService();
+            this.world.NameGenerator = new NameGenerator();
+            
             this.world.WorldBehaviour = new WorldBehaviourRepository(GetContextWithData(this.world));
         }
 
@@ -97,6 +121,18 @@ namespace Tests
             {
                 worldBehaviourModel.Name.Should().Be(worldBehaviourName);
             }
+        }
+
+        [Test]
+        public void TestWormBehaviourInDbWorld()
+        {
+            var localWorld = GetNewWorld();
+            var gameSession1 = localWorld.simulator.SimulateBehaviourByName(worldBehaviourName);
+            localWorld = GetNewWorld();
+            var gameSession2 = localWorld.simulator.SimulateBehaviourByName(worldBehaviourName);
+
+            gameSession1.FoodList.Should().BeEquivalentTo(gameSession2.FoodList);
+            gameSession1.SnakeList.Should().BeEquivalentTo(gameSession2.SnakeList);
         }
     }
 }

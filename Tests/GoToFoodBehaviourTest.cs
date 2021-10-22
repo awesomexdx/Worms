@@ -22,6 +22,18 @@ namespace Tests
         }
 
         [Test]
+        public void NoFoodTest()
+        {
+            Snake snake = world.Snakes[0];
+            int steps = 10;
+            for (int i = 0; i < steps; i++)
+            {
+                snake.Cell = snake.Behaviour.NextStep(new Snake(snake), new List<Food>(world.Foods), null).Move.Move(snake.Cell);
+                snake.Cell.Should().Be(new Cell(0, 0));
+            }
+        }
+
+        [Test]
         public void GoToFoodByXTest()
         {
             Snake snake = world.Snakes[0];

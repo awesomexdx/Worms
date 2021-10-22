@@ -36,14 +36,14 @@ namespace Snakes.Services
         {
             Console.WriteLine("Starting life...");
 
-            /*
+            
             World world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
             world.AddSnake(new Snake("John", new Cell(0, 0),
                 new GoToFoodBehaviour()));
             world.Start();
             World worldDb = new World(foodGenerator, worldBehaviourRepository, behaviourName);
-            worldDb.StartForDb();*/
+            worldDb.StartForDb();
 
             World worldForDb = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
             worldForDb.WorldBehaviour = worldBehaviourRepository;

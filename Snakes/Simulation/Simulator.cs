@@ -180,18 +180,5 @@ namespace Snakes
             world.FileHandlerService.TextWriter.Close();
             return gameSession;
         }
-
-        public List<WorldBehaviourModel> StartForDbInMemory()
-        {
-            int curStep;
-            List<WorldBehaviourModel> models = new();
-            for (curStep = 0; curStep < GAME_DURATION; curStep++)
-            {
-                var worldBehaviour = GenerateWorldBehaviourModel(curStep);
-                models.Add(worldBehaviour);
-            }
-
-            return models;
-        }
     }
 }

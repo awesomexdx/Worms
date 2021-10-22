@@ -2,7 +2,7 @@
   "profiles": {
     "Snakes": {
       "commandName": "Project",
-      "commandLineArgs": "SecondTest"
+      "commandLineArgs": "NewBehaviour"
     },
     "WSL 2": {
       "commandName": "WSL2",
