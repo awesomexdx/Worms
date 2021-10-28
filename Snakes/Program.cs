@@ -8,6 +8,8 @@ using Snakes.models;
 using Snakes.Services;
 using Snakes.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System.Threading;
 
 namespace Snakes
 {
@@ -15,9 +17,25 @@ namespace Snakes
     {
         private static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            Thread serverThread = new Thread(new ThreadStart(() =>
+            {
+                CreateWebHostBuilder(args).Build().Run();
+            }));
+
+            Thread clientThread = new Thread(new ThreadStart(() =>
+            {
+                CreateHostBuilder(args).Build().Run();
+            }));
+            serverThread.Start();
+            clientThread.Start();
         }
-        
+
+        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+               .ConfigureWebHostDefaults(webBuilder =>
+               {
+                   webBuilder.UseStartup<StartUp>().UseUrls("http://localhost:4000");
+               });
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
@@ -27,27 +45,27 @@ namespace Snakes
                     {
                         options.ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;";
                     });
-                    
-                    services.AddDbContext<MainDbContext>(options => 
+
+
+                    services.AddDbContext<MainDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;"));
 
                     services.AddTransient<IWorldBehaviourRepository, WorldBehaviourRepository>();
                     services.AddTransient<INameGenerator, NameGenerator>();
                     services.AddTransient<IFoodGenerator, FoodGenerator>();
-                    services.AddTransient<ISnakeActionsService, SnakeActionsService>();
+                    services.AddTransient<ISnakeActionsService, SnakeActionsWebService>();
                     services.AddTransient<IFileHandler, FileHandler>();
 
                     services.AddHostedService<WorldSimulatorService>(s => new WorldSimulatorService(
                         new FoodGenerator(),
                         new NameGenerator(),
-                        new SnakeActionsService(),
+                        new SnakeActionsWebService(),
                         new FileHandler(),
                         new WorldBehaviourRepository(s.GetService<MainDbContext>()),
                         args[0]
                     ));
 
                 });
-
         }
 
     }

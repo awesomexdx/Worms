@@ -191,6 +191,7 @@ namespace View
         {
             GameSession bestGameSession = new GameSession();
             int maxSnakes = 0;
+            int totalSnakes = 0;
             progressSimulations.MaxValue = (int)countOfGenerationsUpDown.Value;
             progressSimulations.Value = 0;
             progressSimulations.BackColor = Color.White;
@@ -204,6 +205,7 @@ namespace View
                 world.AddSnake(new Snake("John", new Cell(0, 0),
                     new GoToFoodBehaviour()));
                 gameSession = world.Start();
+                totalSnakes += gameSession.SnakeList[99].Count;
                 if (maxSnakes < gameSession.SnakeList[99].Count)
                 {
                     maxSnakes = gameSession.SnakeList[99].Count;
@@ -217,7 +219,9 @@ namespace View
             progressSimulations.Value = (int)countOfGenerationsUpDown.Value;
 
             gameSession = bestGameSession;
-            countOfSnakesLable.Text = $"Best count of snakes: {maxSnakes}, Dead food count: {gameSession.DeadFoodCount}";
+            countOfSnakesLable.Text = $"Best count of snakes: {maxSnakes}," +
+                $" Dead food count: {gameSession.DeadFoodCount}," +
+                $" Average: {totalSnakes/countOfGenerationsUpDown.Value}";
 
             if (fieldPrepared)
             {

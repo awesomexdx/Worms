@@ -42,6 +42,7 @@ namespace Snakes.Services
             world.AddSnake(new Snake("John", new Cell(0, 0),
                 new GoToFoodBehaviour()));
             world.Start();
+            /*
             World worldDb = new World(foodGenerator, worldBehaviourRepository, behaviourName);
             worldDb.StartForDb();
 
@@ -49,7 +50,7 @@ namespace Snakes.Services
             worldForDb.WorldBehaviour = worldBehaviourRepository;
             worldForDb.AddSnake(new Snake("John", new Cell(0, 0),
                 new GoToFoodBehaviour()));
-            worldForDb.SimulateSessionByName(behaviourName);
+            worldForDb.SimulateSessionByName(behaviourName);*/
 
             return Task.CompletedTask;
         }

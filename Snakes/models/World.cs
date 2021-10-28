@@ -1,6 +1,7 @@
 ﻿using Snakes.Services;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using Snakes.DataBase.Models;
 using Snakes.DataBase.Repositories;
 
@@ -102,6 +103,39 @@ namespace Snakes.models
             state.Append("]");
 
             return state.ToString();
+        }
+
+        public JsonWorld GetStateInJSON()
+        {
+            string json;
+            List<JsonWorm> worms = new();
+            List<JsonFood> foods = new();
+
+            foreach (var snake in this.Snakes)
+            {
+                worms.Add(new JsonWorm(){name = snake.Name, 
+                    lifeStrength = snake.HitPoints, 
+                    position = new JsonCell(){x = snake.Cell.X, y = snake.Cell.Y}});
+            }
+
+            foreach (var food in this.Foods)
+            {
+                foods.Add(new JsonFood()
+                {
+                    expiresIn = food.TimeToLive,
+                    position = new JsonCell() { x = food.Cell.X, y = food.Cell.Y }
+                });
+            }
+
+            JsonWorld jsonWorld = new JsonWorld()
+            {
+                worms = worms,
+                foods = foods
+            };
+
+            //json = JsonSerializer.Serialize<JsonWorld>(jsonWorld);
+
+            return jsonWorld;
         }
     }
 }
