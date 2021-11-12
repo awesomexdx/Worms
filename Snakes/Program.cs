@@ -26,15 +26,15 @@ namespace Snakes
             {
                 CreateHostBuilder(args).Build().Run();
             }));
-            serverThread.Start();
             clientThread.Start();
+            //serverThread.Start();
         }
 
         public static IHostBuilder CreateWebHostBuilder(string[] args) =>
            Host.CreateDefaultBuilder(args)
                .ConfigureWebHostDefaults(webBuilder =>
                {
-                   webBuilder.UseStartup<StartUp>().UseUrls("http://localhost:4000");
+                   webBuilder.UseStartup<StartUp>();
                });
         public static IHostBuilder CreateHostBuilder(string[] args)
         {

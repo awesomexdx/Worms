@@ -14,10 +14,10 @@ namespace Snakes.Services
     {
         public SnakeAction Answer(Snake snake, World world)
         {
-            var result = PostRequestAsync(snake.Name, world.GetStateInJSON());
-            ActionType actionType = result.Result.action.split ? ActionType.REPRODUCE : ActionType.MOVE;
+            var result = PostRequest(snake.Name, world.GetStateInJSON());
+            ActionType actionType = result.action.split ? ActionType.REPRODUCE : ActionType.MOVE;
             IMove move;
-            switch(result.Result.action.direction)
+            switch(result.action.direction)
             {
                 case "Up":
                     move = new MoveUp();
@@ -39,9 +39,9 @@ namespace Snakes.Services
             return new SnakeAction(move, actionType);
         }
 
-        private async Task<JsonResponce> PostRequestAsync(string name, JsonWorld jsonWorld)
+        private JsonResponce PostRequest(string name, JsonWorld jsonWorld)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://localhost:4000/{name}/getAction");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://localhost:5000/{name}/getAction");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
             string data = JsonSerializer.Serialize<JsonWorld>(jsonWorld);
