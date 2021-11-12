@@ -27,7 +27,7 @@ namespace Snakes
                 CreateHostBuilder(args).Build().Run();
             }));
             clientThread.Start();
-            //serverThread.Start();
+            serverThread.Start();
         }
 
         public static IHostBuilder CreateWebHostBuilder(string[] args) =>
