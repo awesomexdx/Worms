@@ -5,12 +5,12 @@ namespace Snakes.Services
 {
     public class SnakeActionsService : ISnakeActionsService
     {
-        public SnakeAction Answer(Snake snake, World world)
+        public SnakeAction Answer(Snake snake, World world, int step = 0)
         {
             snake.Behaviour.CurrentCell = snake.Cell;
             snake.Behaviour.SnakeHP = snake.HitPoints;
             snake.Behaviour.World = world;
-            SnakeAction action = snake.Behaviour.NextStep(new Snake(snake), new List<Food>(world.Foods), new List<Snake>(world.Snakes));
+            SnakeAction action = snake.Behaviour.NextStep(new Snake(snake), new List<Food>(world.Foods), new List<Snake>(world.Snakes), step);
 
             return action;
         }

@@ -8,6 +8,8 @@ namespace Snakes.models
         public Cell Cell { get; set; }
         public Behaviour Behaviour { get; set; }
         public int HitPoints { get; set; }
+
+        public int FoodToGoIndex { get; set; }
         public Snake(string name, int x, int y, IBehaviour behaviour)
         {
             Name = name;
@@ -28,7 +30,7 @@ namespace Snakes.models
         {
             Name = name;
             Cell = new Cell(x, y);
-            Behaviour = new GoToFoodBehaviour();
+            Behaviour = new OptimumBehaviour();
             HitPoints = 10;
         }
 

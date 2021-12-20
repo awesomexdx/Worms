@@ -51,7 +51,7 @@ namespace Tests
 
             localWorld.WorldBehaviour = new WorldBehaviourRepository(GetContext());
             localWorld.AddSnake(new Snake("John", new Cell(0, 0),
-                new GoToFoodBehaviour()));
+                new OptimumBehaviour()));
             return localWorld;
         }
 

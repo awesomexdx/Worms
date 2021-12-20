@@ -52,7 +52,7 @@ namespace Snakes
                         world.Foods.Remove(newFood);
                     }
 
-                    SnakeAction action = world.SnakeActionsService.Answer(snake, world);
+                    SnakeAction action = world.SnakeActionsService.Answer(snake, world, currentStep);
                     SimulationHelper.ResolveAction(world, action, snake, newSnakes);
                     snake.HitPoints--;
                     if (snake.HitPoints <= 0) { deadSnakes.Add(snake); }

@@ -60,8 +60,8 @@ namespace Snakes.Simulation
             if (cellContent == CellContent.Void && snake.HitPoints >= 11)
             {
                 snake.HitPoints -= REPRODUCTION_PRICE;
-                newSnakes.Add(new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y, new GoToFoodBehaviour()));
-            } else if (cellContent == CellContent.Food && snake.HitPoints >= 11)
+                newSnakes.Add(new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y, new OptimumBehaviour()));
+            }/* else if (cellContent == CellContent.Food && snake.HitPoints >= 11)
             {
                 snake.HitPoints -= REPRODUCTION_PRICE;
                 var newSnake = new Snake(world.NameGenerator.GenerateNext(), newCell.X, newCell.Y,
@@ -69,7 +69,7 @@ namespace Snakes.Simulation
                 newSnake.HitPoints += SNAKE_REWARD;
                 world.Foods.RemoveAt(world.Foods.IndexOf(world.Foods.First(x => x.Cell.X == newCell.X && x.Cell.Y == newCell.Y)));
                 newSnakes.Add(newSnake);
-            }
+            }*/
         }
         public static void ResolveAction(World world, SnakeAction action, Snake snake, List<Snake> newSnakes)
         {

@@ -12,7 +12,7 @@ namespace Snakes.Services
 {
     public class SnakeActionsWebService : ISnakeActionsService
     {
-        public SnakeAction Answer(Snake snake, World world)
+        public SnakeAction Answer(Snake snake, World world, int step=0)
         {
             var result = PostRequest(snake.Name, world.GetStateInJSON());
             ActionType actionType = result.action.split ? ActionType.REPRODUCE : ActionType.MOVE;

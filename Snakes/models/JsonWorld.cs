@@ -9,6 +9,6 @@ namespace Snakes.models
     public class JsonWorld
     {
         public List<JsonWorm> worms { get; set; }
-        public List<JsonFood> foods { get; set; }
+        public List<JsonFood> food { get; set; }
     }
 }

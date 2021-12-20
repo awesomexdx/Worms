@@ -110,7 +110,7 @@ namespace View
             world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
             world.AddSnake(new Snake("John", new Cell(0, 0),
-                new GoToFoodBehaviour()));
+                new OptimumBehaviour()));
             gameSession = world.Start();
 
             goToStep(0);
@@ -192,36 +192,50 @@ namespace View
             GameSession bestGameSession = new GameSession();
             int maxSnakes = 0;
             int totalSnakes = 0;
+            double bestAvg = 0;
+            int bestParam = 0;
+            int fails = 0;
             progressSimulations.MaxValue = (int)countOfGenerationsUpDown.Value;
             progressSimulations.Value = 0;
             progressSimulations.BackColor = Color.White;
             progressSimulations.ForeColor = Color.Black;
             progressSimulations.BorderColor = Color.Black;
 
-            for (int i = 0; i < countOfGenerationsUpDown.Value; i++)
-            {
-                world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
-
-                world.AddSnake(new Snake("John", new Cell(0, 0),
-                    new GoToFoodBehaviour()));
-                gameSession = world.Start();
-                totalSnakes += gameSession.SnakeList[99].Count;
-                if (maxSnakes < gameSession.SnakeList[99].Count)
+            //for (int j = 2; j< 10; j++)
+            //{
+                //OptimumBehaviour.maxSnakes = j;
+                for (int i = 0; i < countOfGenerationsUpDown.Value; i++)
                 {
-                    maxSnakes = gameSession.SnakeList[99].Count;
-                    bestGameSession = gameSession;
-                }
+                    world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
-                await updateProgress(i);
-                await Task.Delay(2);
-            }
+                    world.AddSnake(new Snake("John", new Cell(0, 0),
+                        new OptimumBehaviour()));
+                    gameSession = world.Start();
+                    totalSnakes += gameSession.SnakeList[99].Count;
+                    
+                    if (maxSnakes < gameSession.SnakeList[99].Count)
+                    {
+                        maxSnakes = gameSession.SnakeList[99].Count;
+                        bestGameSession = gameSession;
+                    }
+
+                    await updateProgress(i);
+                    await Task.Delay(2);
+                }
+                if (bestAvg < totalSnakes/(double)countOfGenerationsUpDown.Value) {
+                    bestAvg = totalSnakes / (double)countOfGenerationsUpDown.Value;
+                    //bestParam = j;
+                }
+                totalSnakes = 0;
+            //}
 
             progressSimulations.Value = (int)countOfGenerationsUpDown.Value;
 
             gameSession = bestGameSession;
             countOfSnakesLable.Text = $"Best count of snakes: {maxSnakes}," +
                 $" Dead food count: {gameSession.DeadFoodCount}," +
-                $" Average: {totalSnakes/countOfGenerationsUpDown.Value}";
+                $" Average: {totalSnakes/countOfGenerationsUpDown.Value}" + 
+                $" Best Param: {bestParam} with avg {bestAvg}";
 
             if (fieldPrepared)
             {
@@ -240,7 +254,7 @@ namespace View
             World worldForDb = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
             worldForDb.WorldBehaviour = worldBehaviourRepository;
             worldForDb.AddSnake(new Snake("John", new Cell(0, 0),
-                new GoToFoodBehaviour()));
+                new OptimumBehaviour()));
             gameSession = worldForDb.SimulateSessionByName(behaviourName.Text);
             if (fieldPrepared)
             {

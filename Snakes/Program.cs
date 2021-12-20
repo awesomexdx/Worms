@@ -26,7 +26,7 @@ namespace Snakes
             {
                 CreateHostBuilder(args).Build().Run();
             }));
-            clientThread.Start();
+            //clientThread.Start();
             serverThread.Start();
         }
 

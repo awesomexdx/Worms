@@ -4,6 +4,6 @@ namespace Snakes.Services
 {
     public interface ISnakeActionsService
     {
-        public SnakeAction Answer(Snake snake, World world);
+        public SnakeAction Answer(Snake snake, World world, int step = 0);
     }
 }

@@ -40,7 +40,7 @@ namespace Snakes.Services
             World world = new World(nameGenerator, foodGenerator, snakeActionsService, fileHandlerService);
 
             world.AddSnake(new Snake("John", new Cell(0, 0),
-                new GoToFoodBehaviour()));
+                new OptimumBehaviour()));
             world.Start();
             /*
             World worldDb = new World(foodGenerator, worldBehaviourRepository, behaviourName);

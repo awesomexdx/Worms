@@ -130,7 +130,7 @@ namespace Snakes.models
             JsonWorld jsonWorld = new JsonWorld()
             {
                 worms = worms,
-                foods = foods
+                food = foods
             };
 
             //json = JsonSerializer.Serialize<JsonWorld>(jsonWorld);
