@@ -11,9 +11,9 @@ namespace Snakes.behaviours
     public class OptimumBehaviour : Behaviour
     {
         public static int max_steps = 100;
-        public static int hpAvg = 88;//65;
-        public static int stepTo = 21;//33;
-        public static int hpMin = 20;//25;
+        public static int hpAvg = 65;
+        public static int stepTo = 33;
+        public static int hpMin = 25;
         public static int maxSnakes = 4;
         public override SnakeAction NextStep(Snake snake, List<Food> foods, List<Snake> snakes, int step)
         {
